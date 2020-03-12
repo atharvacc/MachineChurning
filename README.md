@@ -16,11 +16,15 @@
 - Label pixels for H&E And MUSE and FIBI images.
 - Plot Loss curve for all 3 models to understand it better
 - Communicate results with professor for evaluation.
+- Modify with architecture to use U-Net to see if that makes a difference.
 
 #### Interface
 - Build graphical interface 
 - Set up API for model inference
-- Test graphical interface.
+- Test graphical interface locally.
+- Look at builiding pipelines to store data for training purposes later on.
+
+
 
 
 #### Done
