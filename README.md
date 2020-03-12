@@ -9,6 +9,7 @@
 - Add parsing support for lab gray scale converting(ip-AC)
 - Add parsing support for cycle-gan and run it (ip-AC)
 - Add parser for preprocessing images for high resolution images
+- Host data on bucket and add script to download it
 
 #### Modelling
 - Port PyTorch code to Tensorflow. 
