@@ -1,5 +1,3 @@
-
-
 import tensorflow as tf
 import pandas as pd 
 import numpy as np
@@ -10,10 +8,9 @@ from datetime import datetime
 from tensorflow.keras.layers import Input, Conv2D, UpSampling2D, MaxPool2D, AveragePooling2D, Conv2DTranspose
 from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.models import load_model
 from skimage.io import imread, imsave
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 
 class base_gray_scale_model:
     """
@@ -85,6 +82,7 @@ class base_gray_scale_model:
                         Y_HE: numpy array containing the output data (colored images)
         """
         data, data_gray = load_from_dir(directory, extension)
+        print(data_gray.shape)
         m,n,o = data_gray.shape
         X_HE = data_gray.reshape(m,n,o,1)
         Y_HE = data/255
@@ -108,11 +106,9 @@ class base_gray_scale_model:
                 print("Working on img {} \n".format(self.test_dir + "/" + img_name))
                 img = imread(self.test_dir + "/" + img_name, as_gray=True).reshape(1,512,512,1)
                 pred = self.model.predict(img).reshape(512,512,3) * 255
-                pred = pred.astype(int)
                 plt.figure()
                 plt.imshow(pred)
                 plt.show()
-
                 imsave("{}/pred_{}".format(self.test_save_dir, img_name), pred)
         return  
 
