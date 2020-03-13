@@ -68,8 +68,9 @@ class base_gray_scale_model:
         model.add(UpSampling2D((2, 2)))
         model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
         model.add(Conv2D(3, (3, 3), activation='sigmoid', padding='same'))
+        #model.add(Conv2D(2, (3, 3), padding='same'))
         model.add(UpSampling2D((2, 2)))
-        opt = Adam(learning_rate = self.lr)
+        opt = Adam(learning_rate = 0.001)
         model.compile(optimizer=opt, loss='mae', metrics = ['mse'])
         return(model)
 
