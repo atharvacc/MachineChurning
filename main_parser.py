@@ -32,18 +32,23 @@ def main():
             add_training_mode_args(parser)
             myModel = base_gray_scale_model( lr = parser.parse_args().lr , batch_size = parser.parse_args().batch_size, epochs = parser.parse_args().epochs, 
                                             model_save_dir = parser.parse_args().model_save_dir,  train_dir = parser.parse_args().train_dir, extension = parser.parse_args().img_extension) 
+            myModel.model.summary()
             myModel.train()
         if (parser.parse_known_args()[0].train_or_test == "test"):
             add_testing_mode_args(parser)
             myModel = base_gray_scale_model( lr = parser.parse_args().lr , batch_size = parser.parse_args().batch_size, epochs = parser.parse_args().epochs, 
                                             model_save_dir = parser.parse_args().model_save_dir, extension = parser.parse_args().img_extension, test_dir= parser.parse_args().test_dir,
                                             test_save_dir= parser.parse_args().test_save_dir, model_path= parser.parse_args().model_path)
+            myModel.model.summary()
             myModel.predict()
+            
+            """
     elif (parser.parse_known_args()[0].model_name == "cycle-gan"):
         if (parser.parse_known_args()[0].train_or_test == "train"):
-            #Train param
+            
         if (parser.parse_known_args()[0].train_or_test == "test"):
             #Test param
+            """
 
                                             
 

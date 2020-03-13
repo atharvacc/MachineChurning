@@ -13,6 +13,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.models import load_model
 from skimage.io import imread, imsave
+import matplotlib.pyplot as plt
 
 class base_gray_scale_model:
     """
@@ -66,7 +67,7 @@ class base_gray_scale_model:
         model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
         model.add(UpSampling2D((2, 2)))
         model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
-        model.add(Conv2D(3, (3, 3), activation='tanh', padding='same'))
+        model.add(Conv2D(3, (3, 3), activation='sigmoid', padding='same'))
         model.add(UpSampling2D((2, 2)))
         opt = Adam(learning_rate = self.lr)
         model.compile(optimizer=opt, loss='mae', metrics = ['mse'])
@@ -90,6 +91,8 @@ class base_gray_scale_model:
 
     def train(self):
         X_train, y_train = self.preprocess_data(self.train_dir, self.extension)
+        print("Shape of training data is : {}".format(X_train.shape))
+        print("Shape of testing data is {}".format(y_train.shape))
         validation_split = 0.1
         self.model.fit(x = X_train, y = y_train, batch_size=self.batch_size, epochs=self.epochs, validation_split=validation_split, verbose=1)
         if not os.path.exists(self.model_save_dir):
@@ -104,7 +107,11 @@ class base_gray_scale_model:
                 print("Working on img {} \n".format(self.test_dir + "/" + img_name))
                 img = imread(self.test_dir + "/" + img_name, as_gray=True).reshape(1,512,512,1)
                 pred = self.model.predict(img).reshape(512,512,3) * 255
-                pred = pred.astype(np.uint8)
+                pred = pred.astype(int)
+                plt.figure()
+                plt.imshow(pred)
+                plt.show()
+
                 imsave("{}/pred_{}".format(self.test_save_dir, img_name), pred)
         return  
 
