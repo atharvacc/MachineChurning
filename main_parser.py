@@ -33,6 +33,7 @@ def add_test_cycle_gan_args(parser):
     parser.add_argument("--test_dir", required=True, help = "Directory to find testing data")
     parser.add_argument("--model_path", required=False, help = "Directory to find the model", default = "./saved_models")
     parser.add_argument("--test_model_name", required=False, help = "Name of model", default = "test_cyclegan")
+    parser.add_argument("--result_dir", required=False, help = "where to store the predictions", default = "./result" )
 
 
 
@@ -69,19 +70,13 @@ def main():
             
             
         if (parser.parse_known_args()[0].train_or_test == "test"):
-            os.system("python ganilla/test.py --epoch {latest} --results_dir ./results_3 --dataroot {data_path} \
+            add_test_cycle_gan_args(parser)
+            os.system("python ganilla/test.py --epoch {latest} --results_dir {result_dir} --dataroot {data_path} \
                          --checkpoints_dir {model_path} --loadSize 512 --fineSize 512 --display_winsize 512 --name {test_model_name} \
                               --model cycle_gan --netG resnet_fpn" .format(latest = parser.parse_args().epoch_use, data_path = parser.parse_args().test_dir,
-                               model_path = parser.parse_args().model_path, test_model_name = parser.parse_args().test_model_name))
-
-                                            
+                               model_path = parser.parse_args().model_path, test_model_name = parser.parse_args().test_model_name, result_dir = parser.parse_args().result_dir))
 
 
-    
-    
-    
-    
-   
 
 main()
 
