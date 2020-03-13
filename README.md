@@ -5,11 +5,11 @@
 ### TODO
 
 #### Parsing
-- Add Parsing support for basic gray scale converting (ip-AC)
-- Add parsing support for lab gray scale converting(ip-AC)
+
 - Add parsing support for cycle-gan and run it (ip-AC)
 - Add parser for preprocessing images for high resolution images
 - Host data on bucket and add script to download it
+- Testing gray Scale and lab_gray to make sure its working
 
 #### Modelling
 - Port PyTorch code to Tensorflow. 
@@ -31,6 +31,8 @@
 ### Done
 
 #### Parsing
+- Add Parsing support for basic gray scale converting (Done- AC)
+- Add parsing support for lab gray scale converting(Done- AC)
 
 #### Modelling
 
