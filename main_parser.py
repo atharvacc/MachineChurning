@@ -64,9 +64,9 @@ def main():
     elif (parser.parse_known_args()[0].model_name == "cycle-gan"):
         if (parser.parse_known_args()[0].train_or_test == "train"):
             add_train_cycle_gan_args(parser)
-            os.system("python ganilla/train.py --dataroot {test_dir} --lr {lr} --batch_size {batch_size} --niter {epochs} --niter_decay {epoch_decay} --checkpoints_dir {model_save_dir}  \
+            os.system("python ganilla/train.py --dataroot {train_dir} --lr {lr} --batch_size {batch_size} --niter {epochs} --niter_decay {epoch_decay} --checkpoints_dir {model_save_dir}  \
             --loadSize 512 --fineSize 512 --display_winsize 512 --name test_cyclegan --model cycle_gan --netG resnet_fpn" .format(train_dir = parser.parse_args().train_dir, lr = parser.parse_args().lr, batch_size = parser.parse_args().batch_size, model_save_dir = parser.parse_args().model_save_dir, epochs = parser.parse_args().epochs,
-             epoch_decay = parser.parse_args().epoch_decay) )
+                epoch_decay = parser.parse_args().epoch_decay) )
             
             
         if (parser.parse_known_args()[0].train_or_test == "test"):
