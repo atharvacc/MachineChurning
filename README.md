@@ -34,7 +34,7 @@
 #### Parsing
 - Add Parsing support for basic gray scale converting (Done- AC)
 - Add parsing support for lab gray scale converting(Done- AC)
-- Add parsing support for cycle-gan and run it (ip-AC)
+- Add parsing support for cycle-gan and run it (Done-AC)
 
 #### Modelling
 
