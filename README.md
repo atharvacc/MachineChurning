@@ -8,7 +8,7 @@
 
 
 - Add parser for preprocessing images for high resolution images
-- Host data on bucket and add script to download it
+- Host data on bucket and add script to download it (AC: Data is hosted, will allow script to dl once server is hosted)
 - Testing gray Scale and lab_gray to make sure its working
 - Testing Setting for cycle-gan, and refine it even better.
 
