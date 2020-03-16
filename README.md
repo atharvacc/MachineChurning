@@ -14,7 +14,7 @@
 - Fix image being corrupted bug for wget
 
 #### Modelling
-- Construct full_image from stacks (AC - IP)
+
 - Add metric for style and content evaluation.
 - Label pixels for H&E And MUSE and FIBI images.
 - Plot Loss curve for all 3 models to understand it better
@@ -38,5 +38,6 @@
 - Host data on bucket and add script to download it (Done for MUSE- AC)
 
 #### Modelling
+- Construct full_image from stacks (AC - Done)
 
 #### Interface
