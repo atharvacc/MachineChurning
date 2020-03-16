@@ -50,6 +50,9 @@ REFER TO MUSE DATASET THAT CAN BE DOWNLOADED AS A REFERENCE *
 - --test_model_name: Name given to model. default name is test_cyclegan
 - --result_dir: Directory where the results are stored.
 
+### DATASETS AVAILABLE
+- MUSE : This dataset can be download by running the get_muse.sh script provided
+
 
 
 
