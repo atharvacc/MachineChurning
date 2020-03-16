@@ -11,6 +11,7 @@
 - Testing gray Scale and lab_gray to make sure its working (AC - IP)
 - Testing Setting for cycle-gan, and refine training. (AC - IP)
 - Host data for FIBI, and provide script to donwload it 
+- Fix image being corrupted bug for wget
 
 #### Modelling
 - Construct full_image from stacks (AC - IP)
