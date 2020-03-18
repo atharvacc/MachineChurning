@@ -11,8 +11,7 @@
 - Testing gray Scale and lab_gray to make sure its working (AC - IP)
 - Testing Setting for cycle-gan, and refine training. (AC - IP)
 - Host data for FIBI, and provide script to donwload it 
-- Fix image being corrupted bug for wget
-
+- Set up ACL to download files
 #### Modelling
 
 - Add metric for style and content evaluation.
@@ -20,7 +19,8 @@
 - Plot Loss curve for all 3 models to understand it better
 - Communicate results with professor for evaluation.
 - Modify with architecture to use U-Net to see if that makes a difference.
-- Port PyTorch code to Tensorflow. 
+- Add sliding window for blending 
+- Mess around w load size to predict bigger input + Understand how it works
 
 #### Interface
 - Build graphical interface 
