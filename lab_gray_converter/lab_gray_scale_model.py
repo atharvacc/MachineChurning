@@ -65,9 +65,9 @@ class lab_gray_scale_model:
         model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
         model.add(Conv2D(2, (3, 3), activation='softmax', padding='same'))
         #model.add(Conv2D(2, (3, 3), padding='same'))
-        opt = Adam(learning_rate = 0.001)
+        opt = Adam(learning_rate =self.lr)
         model.add(UpSampling2D((2, 2)))
-        model.compile(optimizer=opt, loss='mse', metrics = ['mae'])
+        model.compile(optimizer=opt, loss='mae', metrics = ['mse'])
         return(model)
 
     def preprocess_data(self, directory, extension):
@@ -95,8 +95,8 @@ class lab_gray_scale_model:
         validation_split = 0.1
         self.model.fit(x = X_train, y = y_train, batch_size=self.batch_size, epochs=self.epochs, validation_split=validation_split, verbose=1)
         if not os.path.exists(self.model_save_dir):
-            os.makedirs(self.model_save_dir + "/model/gray_scale/")
-        self.model.save(self.model_save_dir + "/model/gray_scale/model_{}.h5".format(datetime.now().strftime('%Y-%m-%d')))
+            os.makedirs(self.model_save_dir + "/gray_scale/")
+        self.model.save(self.model_save_dir + "/gray_scale/model_{}.h5".format(datetime.now().strftime('%Y-%m-%d')))
 
     def predict(self):
         if not os.path.exists(self.test_save_dir):
