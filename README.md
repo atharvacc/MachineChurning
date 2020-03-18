@@ -8,7 +8,6 @@
 
 
 - Add parser for preprocessing images for high resolution images
-- Testing gray Scale and lab_gray to make sure its working (AC - IP)
 - Testing Setting for cycle-gan, and refine training. (AC - IP)
 - Host data for FIBI, and provide script to donwload it 
 - Set up ACL to download files
@@ -36,7 +35,7 @@
 - Add parsing support for lab gray scale converting(Done- AC)
 - Add parsing support for cycle-gan and run it (Done-AC)
 - Host data on bucket and add script to download it (Done for MUSE- AC)
-
+- Testing gray scale and lab gray (Done- AC)
 #### Modelling
 - Construct full_image from stacks (AC - Done)
 

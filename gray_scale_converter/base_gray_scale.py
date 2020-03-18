@@ -95,8 +95,8 @@ class base_gray_scale_model:
         validation_split = 0.1
         self.model.fit(x = X_train, y = y_train, batch_size=self.batch_size, epochs=self.epochs, validation_split=validation_split, verbose=1)
         if not os.path.exists(self.model_save_dir):
-            os.makedirs(self.model_save_dir + "/model/gray_scale/")
-        self.model.save(self.model_save_dir + "/model/gray_scale/model_{}.h5".format(datetime.now().strftime('%Y-%m-%d')))
+            os.makedirs(self.model_save_dir + "/gray_scale/")
+        self.model.save(self.model_save_dir + "/gray_scale/model_{}.h5".format(datetime.now().strftime('%Y-%m-%d')))
 
     def predict(self):
         if not os.path.exists(self.test_save_dir):
@@ -106,9 +106,6 @@ class base_gray_scale_model:
                 print("Working on img {} \n".format(self.test_dir + "/" + img_name))
                 img = imread(self.test_dir + "/" + img_name, as_gray=True).reshape(1,512,512,1)
                 pred = self.model.predict(img).reshape(512,512,3) * 255
-                plt.figure()
-                plt.imshow(pred)
-                plt.show()
                 imsave("{}/pred_{}".format(self.test_save_dir, img_name), pred)
         return  
 
