@@ -17,6 +17,7 @@
 - Plot Loss curve for all 3 models to understand it better
 - Communicate results with professor for evaluation.
 - Mess around w load size to predict bigger input + Understand how it works
+- Parellize blending function 
 
 #### Interface
 - Build graphical interface 
