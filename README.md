@@ -12,6 +12,7 @@
 - Set up ACL to download files
 #### Modelling
 
+- Input data augmentation ( Deformation, rotate, shear )
 - Add metric for style and content evaluation.
 - Label pixels for H&E And MUSE and FIBI images.
 - Plot Loss curve for all 3 models to understand it better
