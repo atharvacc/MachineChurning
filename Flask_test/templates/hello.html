@@ -1,0 +1,20 @@
+<h1>Google Cloud Platform - Face Detection Sample</h1>
+
+<p>This Python Flask application demonstrates App Engine Flexible, Google Cloud
+Storage, Datastore, and the Cloud Vision API.</p>
+
+<br>
+
+<html>
+  <body>
+    <form action="upload_photo" method="POST" enctype="multipart/form-data">
+      Upload File: <input type="file" name="file"><br>
+      <input type="submit" name="submit" value="Submit">
+    </form>
+    {% for image_entity in image_entities %}
+    <p>Displaying image </p> 
+      <img src="https://storage.cloud.google.com/muse_data/MUSE/testA/Stack0090.jpg?folder=true&organizationId=true" width=512 height=512>
+      
+    {% endfor %}
+  </body>
+</html>
