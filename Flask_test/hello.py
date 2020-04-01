@@ -4,7 +4,9 @@ import os
 from google.cloud import storage
 import time
 from tools.preprocess import Preprocessor
+from tools.postprocessor import Postprocessor
 from skimage.io import imread
+from PIL import Image
 
 PREFIX = "https://storage.cloud.google.com/muse_app_data/"
 BUCKET_NAME = "muse_app_data"
@@ -37,6 +39,7 @@ def upload_photo():
             public_url_input = push_to_bucket(os.path.join("folder", filename), BUCKET_NAME)
             generate_data(os.path.join("folder", filename))
             predict()
+            generate_final_output(filename, 19, 256)
             image_entity = [public_url_input]
             return render_template('hello.html', image_entities = image_entity)
 
@@ -80,4 +83,27 @@ def create_dir(path_name):
     if not os.path.exists(path_name):
         os.makedirs(path_name)
 
+def generate_final_output(orig_filename, row_count, step_size):
+    """
+    stack the predicted images and generate the final output
 
+        Args:
+            image_dir: Directory containing all of the predicted images
+            row_count: number of images in every row 
+            step_size: The step size that was used the generate the images
+    """ 
+
+    os.system("cp -r ./results/test_cyclegan/test_latest/images ./results")
+    #os.system("rm -rf results/test_cyclegan")
+    create_dir("overlap")
+    os.system("mv ./results/images/*_fake_B* ./overlap")
+
+    Postprocess = Postprocessor("overlap/", row_count, step_size)
+    out = Postprocess.stitch_blend()
+    filename = "Prediction_" + orig_filename + ".png"
+    Image.fromarray(out).save(filename)
+    pred_url = push_to_bucket(filename, BUCKET_NAME)
+
+    #Clear everything
+    os.system("rm -rf *.png overlap results ../ganilla/PREDICTION_DATA")
+    return pred_url

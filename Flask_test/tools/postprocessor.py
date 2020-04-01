@@ -35,7 +35,7 @@ class Postprocessor:
         for img_name in image_names:
             img = imread(self.image_dir + img_name)
             curStack.append(img)
-            if(cur_row % row_count == 0):
+            if(cur_row % self.row_count == 0):
                 hstacked = gen_merged_horiz(curStack, self.step_size)
                 stackedImgs.append(hstacked)
                 curStack=[]
