@@ -10,6 +10,8 @@ PREFIX = "https://storage.cloud.google.com/muse_app_data/"
 BUCKET_NAME = "muse_app_data"
 SAVE_DIR = "../ganilla/PREDICTION_DATA/testA"
 temp_DIR = "../ganilla/PREDICTION_DATA/testB"
+RESULT_DIR = "./results/"
+MODEL_PATH = "../ganilla/saved_models/"
 app = Flask(__name__)
 
 @app.route('/')
@@ -34,6 +36,7 @@ def upload_photo():
             file.save(os.path.join("folder", filename))
             public_url_input = push_to_bucket(os.path.join("folder", filename), BUCKET_NAME)
             generate_data(os.path.join("folder", filename))
+            predict()
             image_entity = [public_url_input]
             return render_template('hello.html', image_entities = image_entity)
 
@@ -55,6 +58,7 @@ def generate_data(input_img_path):
     preprocess data and generate data on which to predict 
     """
     create_dir(SAVE_DIR)
+    create_dir(temp_DIR)
     img = imread(input_img_path)
     m,n,o = img.shape
     window_size = 512
@@ -69,7 +73,7 @@ def predict():
     """
     os.system("python ganilla/test.py --epoch latest --results_dir {result_dir} --dataroot {data_path} \
                          --checkpoints_dir {model_path} --loadSize 512 --fineSize 512 --display_winsize 512 --name {test_model_name} \
-                              --model cycle_gan --netG resnet_fpn" )
+                              --model cycle_gan --netG resnet_fpn".format(result_dir = RESULT_DIR, data_path=SAVE_DIR, model_path =MODEL_PATH, test_model_name = "cycle_gan" ) )
 
 
 def create_dir(path_name):
