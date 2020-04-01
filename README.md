@@ -10,6 +10,7 @@
 - Add parser for preprocessing images for high resolution images
 - Host data for FIBI, and provide script to donwload it 
 - Set up ACL to download files
+
 #### Modelling
 
 - Input data augmentation ( Deformation, rotate, shear )
@@ -19,6 +20,9 @@
 - Communicate results with professor for evaluation.
 - Mess around w load size to predict bigger input + Understand how it works
 - Parellize blending function 
+
+- Implement segmentation saliency map to improve the accuracy of the model
+- Implement the compression architecture to speed up the model
 
 #### Interface
 - Build graphical interface 
