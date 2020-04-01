@@ -39,8 +39,8 @@ def upload_photo():
             public_url_input = push_to_bucket(os.path.join("folder", filename), BUCKET_NAME)
             generate_data(os.path.join("folder", filename))
             predict()
-            generate_final_output(filename, 19, 256)
-            image_entity = [public_url_input]
+            output_url = generate_final_output(filename, 19, 256)
+            image_entity = [public_url_input, output_url]
             return render_template('hello.html', image_entities = image_entity)
 
 def push_to_bucket(local_file_name, bucket_name):
@@ -62,6 +62,7 @@ def generate_data(input_img_path):
     """
     create_dir(SAVE_DIR)
     create_dir(temp_DIR)
+    create_dir(RESULT_DIR)
     img = imread(input_img_path)
     m,n,o = img.shape
     window_size = 512
@@ -69,14 +70,15 @@ def generate_data(input_img_path):
     n_row = (n/window_size) * (window_size/step_size) - 1 
     Preprocess  = Preprocessor(img, SAVE_DIR, window_size = window_size, step_size = step_size)
     Preprocess.generate_overlapping_images()
+    os.system("cp ../ganilla/PREDICTION_DATA/testA/Stack_0000.png ../ganilla/PREDICTION_DATA/testB/")
 
 def predict():
     """
     predict on the preprocessed_data
     """
-    os.system("python ganilla/test.py --epoch latest --results_dir {result_dir} --dataroot {data_path} \
+    os.system("python ../ganilla/test.py --epoch latest --results_dir {result_dir} --dataroot {data_path} \
                          --checkpoints_dir {model_path} --loadSize 512 --fineSize 512 --display_winsize 512 --name {test_model_name} \
-                              --model cycle_gan --netG resnet_fpn".format(result_dir = RESULT_DIR, data_path=SAVE_DIR, model_path =MODEL_PATH, test_model_name = "cycle_gan" ) )
+                              --model cycle_gan --netG resnet_fpn".format(result_dir = RESULT_DIR, data_path="../ganilla/PREDICTION_DATA/", model_path =MODEL_PATH, test_model_name = "test_cyclegan" ) )
 
 
 def create_dir(path_name):
