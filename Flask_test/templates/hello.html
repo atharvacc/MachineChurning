@@ -1,7 +1,6 @@
-<h1>Google Cloud Platform - Face Detection Sample</h1>
+<h1>AI Based Color Mapper for MUSE Images</h1>
 
-<p>This Python Flask application demonstrates App Engine Flexible, Google Cloud
-Storage, Datastore, and the Cloud Vision API.</p>
+<p>This Python Flask application that runs our Cycle-GAN model in the background and provides predictions on the fly.</p>
 
 <br>
 
@@ -13,7 +12,7 @@ Storage, Datastore, and the Cloud Vision API.</p>
     </form>
     {% for image_entity in image_entities %}
     <p>Displaying image </p> 
-      <img src="https://storage.cloud.google.com/muse_data/MUSE/testA/Stack0090.jpg?folder=true&organizationId=true" width=512 height=512>
+      <img src= {{image_entity}} width=512 height=512>
       
     {% endfor %}
   </body>
