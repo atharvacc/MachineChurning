@@ -33,8 +33,8 @@ class Preprocessor:
         x = 0 
         y = 0
         pil_img = Image.fromarray(self.input_img)
-        max_x = m - window_size
-        max_y = n - window_size
+        max_x = m - self.window_size
+        max_y = n - self.window_size
         imgs = []
         count = 0
         print("Max_x is {}".format(max_x))
@@ -44,7 +44,7 @@ class Preprocessor:
                 crop_img = crop(pil_img, x, y, self.window_size, self.window_size)
                 crop_img.save("{}/Stack_{}.png".format(self.save_dir, str(count).zfill(4)) )
                 count=count+1
-                y = y + step_size
+                y = y + self.step_size
             y = 0 
-            x = x + step_size
+            x = x + self.step_size
         return 
