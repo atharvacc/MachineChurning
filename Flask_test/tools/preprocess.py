@@ -37,8 +37,6 @@ class Preprocessor:
         max_y = n - self.window_size
         imgs = []
         count = 0
-        print("Max_x is {}".format(max_x))
-        print("Max_y is {}".format(max_y))
         while(x<=max_x):
             while(y<=max_y):
                 crop_img = crop(pil_img, x, y, self.window_size, self.window_size)

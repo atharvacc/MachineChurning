@@ -8,12 +8,13 @@ from tools.postprocessor import Postprocessor
 from skimage.io import imread
 from PIL import Image
 
+from tools.predictor import Predictor
+
 PREFIX = "https://storage.cloud.google.com/muse_app_data/"
 BUCKET_NAME = "muse_app_data"
-SAVE_DIR = "../ganilla/PREDICTION_DATA/testA"
-temp_DIR = "../ganilla/PREDICTION_DATA/testB"
+SAVE_DIR = "./imgs/test/"
 RESULT_DIR = "./results/"
-MODEL_PATH = "../ganilla/saved_models/"
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -38,7 +39,7 @@ def upload_photo():
             file.save(os.path.join("folder", filename))
             public_url_input = push_to_bucket(os.path.join("folder", filename), BUCKET_NAME)
             generate_data(os.path.join("folder", filename))
-            predict()
+            predict("./imgs/")
             output_url = generate_final_output(filename, 19, 256)
             image_entity = [public_url_input, output_url]
             return render_template('hello.html', image_entities = image_entity)
@@ -61,7 +62,6 @@ def generate_data(input_img_path):
     preprocess data and generate data on which to predict 
     """
     create_dir(SAVE_DIR)
-    create_dir(temp_DIR)
     create_dir(RESULT_DIR)
     img = imread(input_img_path)
     m,n,o = img.shape
@@ -70,17 +70,15 @@ def generate_data(input_img_path):
     n_row = (n/window_size) * (window_size/step_size) - 1 
     Preprocess  = Preprocessor(img, SAVE_DIR, window_size = window_size, step_size = step_size)
     Preprocess.generate_overlapping_images()
-    os.system("cp ../ganilla/PREDICTION_DATA/testA/Stack_0000.png ../ganilla/PREDICTION_DATA/testB/")
+    
 
-def predict():
+def predict(img_dir):
     """
     predict on the preprocessed_data
     """
-    os.system("python ../ganilla/test.py --epoch latest --results_dir {result_dir} --dataroot {data_path} \
-                         --checkpoints_dir {model_path} --loadSize 512 --fineSize 512 --display_winsize 512 --name {test_model_name} \
-                              --model cycle_gan --netG resnet_fpn".format(result_dir = RESULT_DIR, data_path="../ganilla/PREDICTION_DATA/", model_path =MODEL_PATH, test_model_name = "test_cyclegan" ) )
-
-
+    model = Predictor(img_dir)
+    model.predict()
+   
 def create_dir(path_name):
     if not os.path.exists(path_name):
         os.makedirs(path_name)
@@ -95,17 +93,14 @@ def generate_final_output(orig_filename, row_count, step_size):
             step_size: The step size that was used the generate the images
     """ 
 
-    os.system("cp -r ./results/test_cyclegan/test_latest/images ./results")
-    #os.system("rm -rf results/test_cyclegan")
-    create_dir("overlap")
-    os.system("mv ./results/images/*_fake_B* ./overlap")
+    
 
-    Postprocess = Postprocessor("overlap/", row_count, step_size)
+    Postprocess = Postprocessor(RESULT_DIR, row_count, step_size)
     out = Postprocess.stitch_blend()
     filename = "Prediction_" + orig_filename + ".png"
     Image.fromarray(out).save(filename)
     pred_url = push_to_bucket(filename, BUCKET_NAME)
 
     #Clear everything
-    os.system("rm -rf *.png overlap results ../ganilla/PREDICTION_DATA")
+    os.system("rm -rf *.png results imgs ")
     return pred_url
