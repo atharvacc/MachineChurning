@@ -8,7 +8,7 @@ from tools.postprocessor import Postprocessor
 from skimage.io import imread
 from PIL import Image
 
-from tools.predictor import Predictor
+from tools.ganilla.predictor import Predictor
 
 PREFIX = "https://storage.cloud.google.com/muse_app_data/"
 BUCKET_NAME = "muse_app_data"
@@ -104,3 +104,4 @@ def generate_final_output(orig_filename, row_count, step_size):
     #Clear everything
     os.system("rm -rf *.png results imgs ")
     return pred_url
+list

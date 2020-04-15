@@ -1,6 +1,6 @@
 import os
-from ganilla.data import CreateDataLoader
-from ganilla.models import create_model
+from .data import CreateDataLoader
+from .models import create_model
 import torch
 import numpy as np
 import torchvision
