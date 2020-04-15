@@ -20,7 +20,7 @@
 - Build graphical interface 
 - Set up API for model inference
 - Test graphical interface locally.
-- Improve model evaluation time by using custom script instead of running Ganilla. (IP - AC)
+
 
 
 ### Done
@@ -38,3 +38,4 @@
 #### Interface
 - Look at builiding pipelines to store data for training purposes later on. (Done -AC: Flask app supports this)
 - Mess around w load size to predict bigger input + Understand how it works (Done - AC)
+- Improve model evaluation time by using custom script instead of running Ganilla. (Done - AC)
