@@ -64,11 +64,11 @@ def get_transforms(o):
 
 def load_dataset(img_dir):
     data_path = img_dir
-    train_dataset = ImageFolderWithPaths( root = data_path, transform= get_transforms())
+    train_dataset = ImageFolderWithPaths( root = data_path, transform= get_transforms( options("./imgs/") ))
     train_loader = torch.utils.data.DataLoader(
         train_dataset,
-        batch_size=16,
-        num_workers=7,
+        batch_size=13,
+        num_workers=10,
         shuffle=False
     )
     return train_loader
@@ -78,16 +78,18 @@ class Predictor():
         self.opt = options(img_dir)
         model = create_model(self.opt)
         model.setup(self.opt)
-        self.genA = self.model.netG_A
+        self.genA = model.netG_A
         self.genA.eval()
         del model
-
+        self.device = torch.device("cuda:0")
+        self.genA.to(self.device)
     def predict(self):
-        for batch_idx, s in enumerate(load_dataset(self.img_dir)):
+        for batch_idx, s in enumerate(load_dataset(self.opt.img_dir)):
             imgs, _, paths = s
             with torch.no_grad():
-                preds = (( ((self.genA(imgs).permute(0,2,3,1).cpu().numpy() * 0.5) + 0.5) * 255).astype(np.uint8) )
-        for idx, img_name in enumerate(list(paths)):
-            img_name = os.path.join(self.opt.result_dir, img_name.split("/")[3])
-            Image.fromarray(preds[idx]).save(img_name) 
+                preds = (( ((self.genA(imgs.to(self.device)).permute(0,2,3,1).cpu().numpy() * 0.5) + 0.5) * 255).astype(np.uint8) )
+            for idx, img_name in enumerate(list(paths)):
+                img_name = os.path.join(self.opt.result_dir, img_name.split("/")[3])
+                Image.fromarray(preds[idx]).save(img_name)
+            print(batch_idx)
 

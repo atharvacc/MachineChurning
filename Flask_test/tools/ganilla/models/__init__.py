@@ -1,12 +1,12 @@
 import importlib
 from .base_model import BaseModel
-
+from .cycle_gan_model import CycleGANModel
 
 def find_model_using_name(model_name):
     # Given the option --model [modelname],
     # the file "models/modelname_model.py"
     # will be imported.
-    model_filename = "models." + model_name + "_model"
+    model_filename =  model_name + "_model"
     modellib = importlib.import_module(model_filename)
 
     # In the file, the class called ModelNameModel() will
@@ -32,8 +32,8 @@ def get_option_setter(model_name):
 
 
 def create_model(opt):
-    model = find_model_using_name(opt.model)
-    instance = model()
+    #model = find_model_using_name(opt.model)
+    instance = CycleGANModel()
     instance.initialize(opt)
     print("model [%s] was created" % (instance.name()))
     return instance
