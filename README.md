@@ -28,7 +28,7 @@
 #### Parsing
 - Add Parsing support for basic gray scale converting (Done- AC)
 - Add parsing support for lab gray scale converting(Done- AC)
-- Add parsing support for cycle-gan and run it (Done-AC)
+- add parsing support for cycle-gan and run it (Done-AC)
 - Host data on bucket and add script to download it (Done for MUSE- AC)
 - Testing gray scale and lab gray (Done- AC)
 #### Modelling
