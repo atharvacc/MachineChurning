@@ -74,16 +74,11 @@ class Preprocessor:
         max_y = n - self.window_size
         imgs = []
         count = 0
-
-        print("Max_x is {}".format(max_x))
-        print("Max_y is {}".format(max_y))
-        while(x <= max_x):
-            while(y <= max_y):
-                crop_img = crop(
-                    pil_img, x, y, self.window_size, self.window_size)
-                crop_img.save(
-                    "{}/Stack_{}.png".format(self.save_dir, str(count).zfill(4)))
-                count = count+1
+        while(x<=max_x):
+            while(y<=max_y):
+                crop_img = crop(pil_img, x, y, self.window_size, self.window_size)
+                crop_img.save("{}/Stack_{}.png".format(self.save_dir, str(count).zfill(4)) )
+                count=count+1
                 y = y + self.step_size
             y = 0
             x = x + self.step_size
