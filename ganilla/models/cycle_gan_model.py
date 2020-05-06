@@ -56,7 +56,7 @@ class CycleGANModel(BaseModel):
                                             opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, opt.init_gain, self.gpu_ids)
             self.netD_B = networks.define_D(opt.input_nc, opt.ndf, opt.netD,
                                             opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, opt.init_gain, self.gpu_ids)
-
+            
         if self.isTrain:
             self.fake_A_pool = ImagePool(opt.pool_size)
             self.fake_B_pool = ImagePool(opt.pool_size)
@@ -64,6 +64,14 @@ class CycleGANModel(BaseModel):
             self.criterionGAN = networks.GANLoss(use_lsgan=not opt.no_lsgan).to(self.device)
             self.criterionCycle = torch.nn.L1Loss()
             self.criterionIdt = torch.nn.L1Loss()
+            
+            #My additions
+            self.c1_HE = torch.Tensor([204.34305218, 173.81203058, 199.23028511]).cuda()
+            self.c2_HE = torch.Tensor([138.16460979, 111.94510225, 155.75621535]).cuda()
+            self.c1_MUSE = torch.Tensor([104.93802143, 113.68013598, 132.22686691]).cuda()
+            self.c2_MUSE = torch.Tensor([ 73.70598012,  58.75668164,  65.57153476]).cuda()
+            self.saliency_loss = torch.nn.L1Loss()
+
             # initialize optimizers
             self.optimizer_G = torch.optim.Adam(itertools.chain(self.netG_A.parameters(), self.netG_B.parameters()),
                                                 lr=opt.lr, betas=(opt.beta1, 0.999))
@@ -131,11 +139,30 @@ class CycleGANModel(BaseModel):
         self.loss_cycle_A = self.criterionCycle(self.rec_A, self.real_A) * lambda_A
         # Backward cycle loss
         self.loss_cycle_B = self.criterionCycle(self.rec_B, self.real_B) * lambda_B
+        
         # combined loss
+        
+       # print(torch.sum(torch.pow(torch.sub(self.real_A.reshape(512,512,3).reshape(-1,3), self.c1_MUSE),2 ), 1).shape)
+        with torch.no_grad(): 
+            d1 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.real_A.reshape(512,512,3).reshape(-1,3), self.c1_MUSE),2),1)).reshape(1,512*512) 
+            d2 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.real_A.reshape(512,512,3).reshape(-1,3), self.c2_MUSE),2),1)).reshape(1,512*512)
+            t3 = torch.cat((d1,d2),0)
+
+            out_muse = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+            del d1,d2,t3
+         # combined loss
+            d1 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.fake_B.reshape(512,512,3).reshape(-1,3), self.c1_HE),2),1)).reshape(1,512*512) 
+            d2 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.fake_B.reshape(512,512,3).reshape(-1,3), self.c2_HE),2),1)).reshape(1,512*512)
+            t3 = torch.cat((d1,d2),0)
+            out_HE = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+            del d1,d2,t3
+        
+        
         # Print losses for debug purpose 
-        print("loss_G_A = {}  loss_G_B = {}  loss_cycle_A = {}  loss_cycle_B = {}  loss_idt_A = {}  loss_idt_B = {} \n".format( self.loss_G_A, self.loss_G_B
-                        , self.loss_cycle_A, self.loss_cycle_B, self.loss_idt_A, self.loss_idt_B))
-        self.loss_G = self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B
+       # print("loss_G_A = {}  loss_G_B = {}  loss_cycle_A = {}  loss_cycle_B = {}  loss_idt_A = {}  loss_idt_B = {} \n".format( self.loss_G_A, self.loss_G_B, self.loss_cycle_A, self.loss_cycle_B, self.loss_idt_A, self.loss_idt_B))
+        
+        #print("Shape is {}\n".format(self.real_A.shape))
+        self.loss_G =  0.01 * self.saliency_loss(out_muse, out_HE) + self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B
         self.loss_G.backward()
 
     def optimize_parameters(self):
@@ -152,3 +179,6 @@ class CycleGANModel(BaseModel):
         self.backward_D_A()
         self.backward_D_B()
         self.optimizer_D.step()
+
+    
+
