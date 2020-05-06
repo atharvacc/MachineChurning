@@ -3,6 +3,9 @@ import itertools
 from util.image_pool import ImagePool
 from .base_model import BaseModel
 from . import networks
+import weka.core.serialization as serialization
+import numpy as np
+from weka.classifiers import Classifier
 
 
 class CycleGANModel(BaseModel):
@@ -132,7 +135,16 @@ class CycleGANModel(BaseModel):
         # Backward cycle loss
         self.loss_cycle_B = self.criterionCycle(self.rec_B, self.real_B) * lambda_B
         # combined loss
-        self.loss_G = self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B
+
+        objectsMUSE = serialization.read_all("classifier_MUSE.model")
+        classifierMUSE = Classifier(jobject=objectsMUSE[0])
+
+        objectsHE = serialization.read_all("classifier_HE.model")
+        classifierHE = Classifier(jobject=objectsHE[0])
+
+        segmentation_loss=np.sum((classifierHE.classifyInstance(self.fake_B-classifierMUSE.classifyInstance(self.real_A))**2)
+
+        self.loss_G = self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B + segmentation_loss
         self.loss_G.backward()
 
     def optimize_parameters(self):
