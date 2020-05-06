@@ -91,5 +91,5 @@ class Predictor():
             for idx, img_name in enumerate(list(paths)):
                 img_name = os.path.join(self.opt.result_dir, img_name.split("/")[3])
                 Image.fromarray(preds[idx]).save(img_name)
-            print(batch_idx)
+            
 
