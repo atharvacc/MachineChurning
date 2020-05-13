@@ -4,6 +4,7 @@ import os
 from google.cloud import storage
 import time
 from tools.preprocess import Preprocessor
+# from tools.preprocess_test import Preprocessor
 from tools.postprocessor import Postprocessor
 from skimage.io import imread
 from PIL import Image
