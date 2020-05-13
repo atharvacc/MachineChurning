@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from os import listdir
 from PIL import Image
-import seaborn as sns
+# import seaborn as sns
 
 def avg_blend(img1,img2):
     return ((img1+img2)/2).astype(np.uint8)

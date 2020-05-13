@@ -7,7 +7,7 @@ from tools.preprocess import Preprocessor
 from tools.postprocessor import Postprocessor
 from skimage.io import imread
 from PIL import Image
-import globalfile
+# import globalfile
 
 from tools.ganilla.predictor import Predictor
 
