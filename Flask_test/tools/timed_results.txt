@@ -1,0 +1,30 @@
+
+====================================
+original iterator preprocess time 
+
+
+"generate_overlapping_images" took 25839.826 ms to execute
+
+====================================
+Parallelized preprocess
+
+starmap time - using 8 process
+
+
+"runner" took 535823.773 ms to execute
+
+"generate_overlapping_images" took 535825.348 ms to execute
+
+====================================
+
+starmap time - using 2 process
+
+"runner" took 176978.068 ms to execute
+
+"generate_overlapping_images" took 177128.886 ms to execute
+====================================
+
+On avg function mycrop() in Parallelized version :
+
+"mycrop" took 180.082 ms to execute
+
