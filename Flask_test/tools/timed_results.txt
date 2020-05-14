@@ -1,30 +1,35 @@
+RAD.png -> 5mb
 
-====================================
-original iterator preprocess time 
-
-
-"generate_overlapping_images" took 25839.826 ms to execute
-
-====================================
-Parallelized preprocess
-
-starmap time - using 8 process
-
-
-"runner" took 535823.773 ms to execute
-
-"generate_overlapping_images" took 535825.348 ms to execute
-
+8 processes:
+"mycrop" took 6219.359 ms to execute
 ====================================
 
-starmap time - using 2 process
+1 process: 
+"mycrop" took 26401.567 ms to execute
 
-"runner" took 176978.068 ms to execute
+No parallel:
+"generate_overlapping_images" took 28388.081 ms to execute
 
-"generate_overlapping_images" took 177128.886 ms to execute
+>___________________________________________________________________
+
+
+Bigboytif.tif -> 76mb
+
+8 processes:
+"mycrop" took 19669.922 ms to execute
 ====================================
 
-On avg function mycrop() in Parallelized version :
+7 processes:
+"mycrop" took 19839.653 ms to execute
 
-"mycrop" took 180.082 ms to execute
+====================================
+4 processes:
+"mycrop" took 22216.641 ms to execute
+====================================
+2 processes:
+"mycrop" took 32275.605 ms to execute
 
+====================================
+1 process: 
+
+"mycrop" took 59003.524 ms to execute

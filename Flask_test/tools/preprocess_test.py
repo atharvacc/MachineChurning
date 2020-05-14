@@ -4,6 +4,7 @@ from functools import wraps
 # import matplotlib.pyplot as plt
 import numpy as np
 from os import listdir
+from multiprocessing import Process, Lock
 import os
 import warnings
 from collections.abc import Sequence, Iterable
@@ -13,21 +14,31 @@ from multiprocessing.dummy import Pool as ThreadPool
 from multiprocessing import pool
 import multiprocessing as mp
 import math
+from multiprocessing import get_context
 # from torchvision.transforms.functional import crop
 from PIL import Image
 # import seaborn as sns
 import time
 import glob
+# from mutiprocessing import set_start_method
+# set_start_method("spawn")
+
 # import globalfile
 # import
 
+# f = open("times.txt", "a")
+
 try:
     import accimage
+    # f = open("times.txt", "a")
+
 except ImportError:
     accimage = None
 
 
 def timeit(my_func):
+    # f = open("myfile.txt", "a")
+    
     @wraps(my_func)
     def timed(*args, **kw):
 
@@ -37,6 +48,9 @@ def timeit(my_func):
 
         print('"{}" took {:.3f} ms to execute\n'.format(
             my_func.__name__, (tend - tstart) * 1000))
+        # f.write('"{}" took {:.3f} ms to execute\n'.format(
+        #     my_func.__name__, (tend - tstart) * 1000))
+            
         return output
     return timed
 
@@ -55,12 +69,13 @@ class Preprocessor:
         self.save_dir = save_dir
         self.window_size = window_size
         self.step_size = step_size
+        
 
     @timeit
     @classmethod
     def crop(cls, img, top, left, height, width):
         """Crop the given PIL Image.
-
+        
         Args:
             img (PIL Image): Image to be cropped. (0,0) denotes the top left corner of the image.
             top (int): Vertical component of the top left corner of the crop box.
@@ -71,9 +86,9 @@ class Preprocessor:
         Returns:
             PIL Image: Cropped image.
         """
+        
         if not Preprocessor._is_pil_image(img):
-            raise TypeError(
-                "img should be PIL Image. Got {}".format(type(img)))
+            raise TypeError("img should be PIL Image. Got {}".format(type(img)))
 
         return img.crop((left, top, left + width, top + height))
 
@@ -89,7 +104,7 @@ class Preprocessor:
 
     @timeit
     def runner(self):
-
+        global f
         m, n, _ = self.input_img.shape
 
         window_size = 512
@@ -103,7 +118,7 @@ class Preprocessor:
         max_x = m - self.window_size
         max_y = n - self.window_size
         count = 0
-
+        
         # Max_x = 3760
         # Max_y = 2336
         iter_ct_x = math.ceil(max_x / 256)
@@ -114,32 +129,68 @@ class Preprocessor:
         iterables = [[i, j] for i in x_iterables for j in y_iterables]
         # iterables
         final_iter = list(enumerate(iterables))
-
-        count = 0
+        
+        # count = 0
 
         # with mp.Pool(mp.cpu_count()-1 or 1) as pool:
-        with mp.Pool(2 or 1) as pool:
+        # with mp.Pool(2 or 1) as pool:
         # with mp.Pool(mp.cpu_count()-1 or 1) as pool:
-            pool.starmap(self.mycrop, final_iter)
+        
+        # set1 = final_iter[0:len(final_iter)//2]
+        # set2 = final_iter[len(final_iter)//2:len(final_iter)]
+        # print(set1)
+        # set1_wrapped = [set1]
+        # set2_wrapped = [set2]
+        # l1 = list(set1)
+        # for num in range(2):
+        # Process(target=self.mycrop, args=set1_wrapped).start()
+        # Process(target=self.mycrop, args=set2_wrapped).start()
+        
+        total_len = len(final_iter)
+        i = 0
+        process_ct = mp.cpu_count()-1 or 1
+        # process_ct = 1
+        sec_len = total_len//process_ct
+
+        for i in range(process_ct):
+            
+            # [sec_len*0:sec_len*1]
+            # [sec_len*1:sec_len*2]
+            # [sec_len*2:sec_len*3]
+            # [sec_len*3:sec_len*4]
+            bottom = sec_len*i
+            top = sec_len*(i+1)
+            lst=[final_iter[bottom:top]]
+            Process(target=self.mycrop, args=lst).start()
+            
+        # f.flush()
+        # f.close() # processes refer to same global vars , cannot close until completely finished
+        # with get_context("spawn").Pool(2 or 1) as pool:
+        #     pool.starmap(self.mycrop, final_iter)
             # pool.starmap_async(self.mycrop, final_iter).get()
-
-    # @profile
+    
     @timeit
-    def mycrop(self, count, dim):
-        x_dim = dim[0]
-        y_dim = dim[1]
-
-        x_lft = x_dim[0]
-        x_rgt = x_dim[1]
-        y_lft = y_dim[0]
-        y_rgt = y_dim[1]
-        window_size = 512
-
-        sample1 = self.input_img[x_lft:x_lft +
-                                 self.window_size, y_lft:y_lft+self.window_size, :]
-        crop_img = Image.fromarray(sample1)
-        crop_img.save(
-            "{}/Stack_{}.png".format(self.save_dir, str(count).zfill(4)))
+    def mycrop(self, data):
+        
+        for section in data:
+            print(section)
+            count = section[0]
+            
+            x_dim = section[1][0]
+            y_dim = section[1][1]
+            # x_dim = section
+            
+            x_lft = x_dim[0]
+            x_rgt = x_dim[1]
+            y_lft = y_dim[0]
+            y_rgt = y_dim[1]
+            window_size = 512
+            # print
+            sample1 = self.input_img[x_lft:x_lft +
+                                    self.window_size, y_lft:y_lft+self.window_size, :]
+            crop_img = Image.fromarray(sample1)
+            crop_img.save(
+                "{}/Stack_{}.png".format(self.save_dir, str(count).zfill(4)))
 
 
     @timeit
@@ -147,7 +198,7 @@ class Preprocessor:
         """
         Generate crops from image of size window_size by window_size. Crops can be overlapping by
         setting the step_size
-
+        
         Args:
             img: image as a numpy array
             window_size: Size of the crops that are generated

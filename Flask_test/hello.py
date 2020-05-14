@@ -24,7 +24,7 @@ app = Flask(__name__)
 def homepage():
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     return render_template('hello.html')
-
+    
 
 @app.route('/upload_photo', methods=['GET', 'POST'])
 def upload_photo():
