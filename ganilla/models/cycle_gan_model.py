@@ -71,6 +71,7 @@ class CycleGANModel(BaseModel):
             self.c1_MUSE = torch.Tensor([104.93802143, 113.68013598, 132.22686691]).cuda()
             self.c2_MUSE = torch.Tensor([ 73.70598012,  58.75668164,  65.57153476]).cuda()
             self.saliency_loss = torch.nn.L1Loss()
+            self.saliency_loss_1 = torch.nn.L1Loss()
 
             # initialize optimizers
             self.optimizer_G = torch.optim.Adam(itertools.chain(self.netG_A.parameters(), self.netG_B.parameters()),
@@ -156,13 +157,25 @@ class CycleGANModel(BaseModel):
             t3 = torch.cat((d1,d2),0)
             out_HE = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
             del d1,d2,t3
+
+            d1 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.fake_A.reshape(512,512,3).reshape(-1,3), self.c1_MUSE),2),1)).reshape(1,512*512) 
+            d2 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.fake_A.reshape(512,512,3).reshape(-1,3), self.c2_MUSE),2),1)).reshape(1,512*512)
+            t3 = torch.cat((d1,d2),0)
+
+            out_muse_1 = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+            del d1,d2,t3
+            d1 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.real_B.reshape(512,512,3).reshape(-1,3), self.c1_HE),2),1)).reshape(1,512*512) 
+            d2 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.real_B.reshape(512,512,3).reshape(-1,3), self.c2_HE),2),1)).reshape(1,512*512)
+            t3 = torch.cat((d1,d2),0)
+            out_HE_1 = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+            del d1,d2,t3
         
         
         # Print losses for debug purpose 
        # print("loss_G_A = {}  loss_G_B = {}  loss_cycle_A = {}  loss_cycle_B = {}  loss_idt_A = {}  loss_idt_B = {} \n".format( self.loss_G_A, self.loss_G_B, self.loss_cycle_A, self.loss_cycle_B, self.loss_idt_A, self.loss_idt_B))
         
         #print("Shape is {}\n".format(self.real_A.shape))
-        self.loss_G =  0.01 * self.saliency_loss(out_muse, out_HE) + self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B
+        self.loss_G =  self.saliency_loss_1(out_muse_1, out_HE_1) + self.saliency_loss(out_muse, out_HE) + self.loss_G_A + self.loss_G_B + self.loss_cycle_A + self.loss_cycle_B + self.loss_idt_A + self.loss_idt_B
         self.loss_G.backward()
 
     def optimize_parameters(self):
