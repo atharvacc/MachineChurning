@@ -1,0 +1,24 @@
+<input id="btnGetResponse" type="button" value="Redirect" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnGetResponse").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "Default.aspx/GetResponse",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.d == true) {
+                        alert("You will now be redirected.");
+                        window.location = "//www.aspsnippets.com/";
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        });
+    });
+</script>

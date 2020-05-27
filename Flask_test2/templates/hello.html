@@ -1,0 +1,158 @@
+<div data-role="page" id="hello" data-url="{{ url_for('homepage') }}">
+
+  <head>
+    <!-- <link rel="stylesheet" href="/static/style.css"> -->
+    <!-- <title>Flask Shop</title> -->
+    <!-- styles -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-3.3.7-dist/js/jquery-3.5.0.js') }}"> -->
+    <script src="{{ url_for('static', filename='bootstrap-3.3.7-dist/js/jquery-3.5.0.js')}}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
+    <!-- D:\coding\class\ecs193\MachineChurning\Flask_test2\static\bootstrap-3.3.7-dist\js\jquery-3.5.0.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/radialIndicator/1.4.0/radialIndicator.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='drop.css') }}">
+
+    <script src="{{ url_for('static', filename='bootstrap-3.3.7-dist/js/bootstrap.min.js')}}"></script>
+    <!-- <script src="{{ url_for('static', filename='drop.css')}}"></script> -->
+
+  </head>
+
+  <h1>AI Based Color Mapper for MUSE Images</h1>
+
+  <p>App running our Cycle-GAN model in the background and provides predictions on the fly.
+  </p>
+
+  <br>
+
+  <html>
+
+
+
+  <body>
+    <!-- <form action="upload_photo" method="POST" enctype="multipart/form-data">
+    Upload File: <input type="file" name="file"><br>
+    <input type="submit" name="submit" value="Submit">
+  </form> -->
+
+    <form action="upload_photo" method="POST" enctype="multipart/form-data">
+      <!-- Upload File: <input type="file" name="file"><br> -->
+
+      <div id="indicatorContainerWrap">
+        <div class="rad-prg" id="indicatorContainer"></div>
+        <div class="rad-cntnt"> Drop file to select.</div>
+        <input type="file" id="prgFileSelector" />
+        <input type="submit" name="submit" value="" onclick="this.parentNode.submit()">
+        <!-- <div class="rad-prg"> <input type="submit" name="submit" value="Submit"></div> -->
+
+      </div>
+
+
+    </form>
+
+
+
+
+
+    <!-- {% for image_entity in image_entities %}
+  <p>Displaying image </p>
+  <img src={{image_entity}} width=512 height=512>
+  {% endfor %} -->
+  </body>
+
+  </html>
+
+
+  <script>
+    function myCallback(result) {
+      // Code that depends on 'result'
+    }
+    function foo(callback) {
+      $.ajax({
+        // ...
+        success: callback
+      });
+    }
+
+    $(document).ready(function () {
+      // $('') selects an element and lets you operate on it.
+
+
+      //file upload example
+      var container = $('#indicatorContainerWrap'),
+        msgHolder = container.find('.rad-cntnt'),
+        containerProg = container.radialIndicator({
+          radius: 100,
+          percentage: true,
+          displayNumber: false
+        }).data('radialIndicator');
+        
+
+      container.on({
+        'dragenter': function (e) {
+          msgHolder.html("Drop here");
+        },
+        'dragleave': function (e) {
+          msgHolder.html("Drop file to select.");
+        },
+        'drop': function (e) {
+          e.preventDefault(); // stop the browser from opening the file you dropped instead of sending it along to the drop event handler.
+          e.stopPropagation()
+          // Description: If this method is called, the default action of the event will not be triggered
+          handleFileUpload(e.originalEvent.dataTransfer.files);
+          // handleFileUpload(e.dataTransfer.files); //  // Gives error: trying to get property of undefined
+
+        }
+      });
+
+      $('#prgFileSelector').on('change', function () {
+        handleFileUpload(this.files);
+      });
+
+      function handleFileUpload(files) {
+        msgHolder.hide();
+        containerProg.option('displayNumber', true);
+
+        var file = files[0],
+          fd = new FormData();
+
+        fd.append('file', file);
+        print(fd)
+        console.log(fd)
+        $.ajax({
+          url: location.origin + '/upload_photo',   
+          type: 'POST',
+          data: fd,
+          processData: false,
+          contentType: false,
+          
+          success: function () {
+            containerProg.option('displayNumber', false);
+            msgHolder.show().html('File upload done.'); // after  
+          },
+          xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            //Upload progress
+            xhr.upload.addEventListener("progress", function (e) {
+              if (e.lengthComputable) {
+                var percentComplete = (e.loaded || e.position) * 100 / e.total;
+                //Do something with upload progress
+                console.log(percentComplete);
+                containerProg.animate(percentComplete);
+              }
+            }, false);
+
+            return xhr;
+          }
+        })
+          .success(function (msg) {
+            $("#log").html(msg);
+            alert("Data Saved: " + msg);
+            window.location.href = "/uploaded";
+          });
+
+      }
+
+
+    });
+  </script>

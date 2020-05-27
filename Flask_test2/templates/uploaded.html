@@ -1,0 +1,25 @@
+<div data-role="page" id="uploaded" data-url="{{ url_for('upload_photo') }}">
+
+<html>
+
+<body>
+    <a href="{{ url_for('upload_photo', filename=filename) }}">Uploaded file link </a>
+
+    <div id="imgSize">
+        <h1>Upload image size: </h1>
+    </div>
+    <div id="img">
+        <p>Displaying images </p>
+        <img src="{{ url_for('static', filename=filename) }}" alt="{{filename}}">
+    </div>
+    
+
+    {% for image_entity in image_entities %}
+        <p>Displaying image </p>
+        <img src={{image_entity}} width=512 height=512>
+    {% endfor %}
+
+
+</body>
+
+</html>
