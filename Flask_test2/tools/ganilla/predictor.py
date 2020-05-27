@@ -72,7 +72,7 @@ def load_dataset(img_dir):
         shuffle=False
     )
     return train_loader
-    
+
 class Predictor():
     def __init__(self, img_dir ) :
         self.opt = options(img_dir)
