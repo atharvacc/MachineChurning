@@ -1,0 +1,7 @@
+*.pyc
+*/__pycache__/
+*/__pycache__/*
+*.png
+*.tif
+*.jpg
+tools/ganilla/__pycache__/
