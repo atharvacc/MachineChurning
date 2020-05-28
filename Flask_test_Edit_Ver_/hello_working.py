@@ -82,9 +82,9 @@ def homepage():
             imgpath = str(SAVE_DIR) + str(file.filename)
             print("imgpath: "+imgpath)
             print("generate_data START")
-
+            
             public_url_input = push_to_bucket(
-                os.path.join("folder", stored_file_name), BUCKET_NAME)
+                os.path.join(app.config['STATIC_FOLDER'], stored_file_name), BUCKET_NAME)
             generate_data(os.path.join(
                 app.config['STATIC_FOLDER'], stored_file_name))
             # public_url_input = os.path.join(
