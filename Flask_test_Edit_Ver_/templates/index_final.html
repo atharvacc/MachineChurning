@@ -113,12 +113,28 @@
                 <div class="image-area mt-4"><img id="imageResult" src="#" alt=""
                         class="img-fluid rounded shadow-sm mx-auto d-block"></div>
 
-
+                
 
             </div>
         </div>
     </div>
+    
+    <div class="row py-4">
+        <div class="container">
 
+            <div id="gallery">
+                <p class="font-italic text-white text-center">FINISHED IMG
+                </p>
+                <div class="overlay" id="overlay_text">Uploaded</div>
+
+                <div class="image-area mt-4"><img id="imageResult2" src="#" alt=""
+                        class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+
+                
+
+            </div>
+        </div>
+    </div>
 
 
 </body>
@@ -156,7 +172,7 @@
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
+            
             reader.onload = function (e) {
                 $('#imageResult')
                     .attr('src', e.target.result);
@@ -502,6 +518,7 @@
                     document.getElementById("Link1").href = link1
                     document.getElementById("Link2").innerText = link2
                     document.getElementById("Link2").href = link2
+                    document.getElementById("imageResult2").src=link2
 
                 }
                 else {
