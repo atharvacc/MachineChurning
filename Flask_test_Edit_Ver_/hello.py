@@ -63,7 +63,7 @@ def homepage():
         else:
 
             stored_file_name = secure_filename(file.filename)
-
+            
             file.save(os.path.join(
                 app.config['STATIC_FOLDER'], stored_file_name))
             print("SAVED img STATIC path: " +
@@ -82,8 +82,8 @@ def homepage():
 
             # public_url_input = push_to_bucket(
             #     os.path.join(['STATIC_FOLDER'], stored_file_name), BUCKET_NAME)
-            # generate_data(os.path.join(
-            #     app.config['STATIC_FOLDER'], stored_file_name))
+            generate_data(os.path.join(
+                app.config['STATIC_FOLDER'], stored_file_name))
             # predict("./imgs/")
             # output_url = generate_final_output(stored_file_name, 19, 256)
             # image_entity = [public_url_input, output_url]
