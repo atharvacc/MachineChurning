@@ -68,7 +68,11 @@
                         class="btn btn-primary">Upload</button>
 
                     <div id="urlsGen">
-                        <li id="myLi"><em>Images Unprocessed</em></li>
+                        <li id="myLi"><em>BEFORE:
+                                <a href id="Link1"></a>
+                                AFTER:
+                                <a href id="Link2"></a>
+                            </em></li>
                     </div>
 
 
@@ -333,10 +337,10 @@
         // INPUT DOES NOT LOAD IMG, SUBMIT DOES
         console.log("upload() input: " + input)
         console.log("upload() input.value: " + input.value)
-
+        
         // Reject if the file input is empty & throw alert
         if (!input.value) {
-
+            
             show_alert("No file selected", "warning")
 
             return;
@@ -472,7 +476,7 @@
         console.log("upload() request.send() data: " + data)
         request.send(data);
         console.log("upload() request.send() FINISHED")
-        
+
         // onreadystatechange function is called every time the readyState changes.
         request.onreadystatechange = function () {
             // readyState 4: request finished and response is ready
@@ -481,7 +485,28 @@
                 // console.log("upload() state change responseText: "+ responseText)
                 console.log(this.responseType)
                 console.log(this.response)
-                document.getElementById("myLi").innerHTML= JSON.stringify(this.response)
+
+                var count = Object.keys(this.response).length;
+                if (count == 2) {
+                    link1 = this.response["BEFORE"]
+                    link2 = this.response["AFTER"]
+                    if (!link1.startsWith("http://") && !link1.startsWith("https://")) {
+                        link1 = "http://"+ link1
+                    }
+                    if (!link2.startsWith("http://") && !link2.startsWith("https://")){
+                        link2 = "http://"+ link2
+                    }
+                    console.log("PASSING link1: " + link1)
+                    console.log("PASSING link2: " + link2)
+                    document.getElementById("Link1").innerText = link1
+                    document.getElementById("Link1").href = link1
+                    document.getElementById("Link2").innerText = link2
+                    document.getElementById("Link2").href = link2
+
+                }
+                else {
+                    document.getElementById("myLi").innerHTML = JSON.stringify(this.response)
+                }
 
                 // alert(this.responseText);
             }

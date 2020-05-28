@@ -1,0 +1,35 @@
+RAD.png -> 5mb
+
+8 processes:
+"mycrop" took 6219.359 ms to execute
+====================================
+
+1 process: 
+"mycrop" took 26401.567 ms to execute
+
+No parallel:
+"generate_overlapping_images" took 28388.081 ms to execute
+
+>___________________________________________________________________
+
+
+Bigboytif.tif -> 76mb
+
+8 processes:
+"mycrop" took 19669.922 ms to execute
+====================================
+
+7 processes:
+"mycrop" took 19839.653 ms to execute
+
+====================================
+4 processes:
+"mycrop" took 22216.641 ms to execute
+====================================
+2 processes:
+"mycrop" took 32275.605 ms to execute
+
+====================================
+1 process: 
+
+"mycrop" took 59003.524 ms to execute
