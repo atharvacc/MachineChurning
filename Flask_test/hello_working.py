@@ -37,16 +37,20 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['STATIC_FOLDER'] = IMG_FOLDER
 print("STATIC_FOLDER: "+app.config['STATIC_FOLDER'])
 app.static_folder = app.config['STATIC_FOLDER']
+app.config['TEMPLATES_AUTO_RELOAD']=True
 
+url1 = ""
+url2 = ""
+messages = []
+inp1 = 0
+inp2 = 0
+public_url_input = ""
+output_url = ""
 
 @app.route("/", methods=["GET", "POST"])
 def homepage():
-    global url1, url2
-    messages = []
-    inp1 = ""
-    inp2 = ""
-    public_url_input = ""
-    output_url = ""
+    global url1, url2,inp1,inp2
+
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     if request.method == "POST":
 
@@ -86,12 +90,14 @@ def homepage():
             # output_url = generate_final_output(stored_file_name, 19, 256)
             # image_entity = [public_url_input, output_url]
             # test()
-            url1 = "www.google.com"
-            url2 = "www.yahoo.com"
+            inp1+=1
+            inp2+=1 
+            url1 = "www.google.com " + str(inp1)
+            url2 = "www.yahoo.com "+ str(inp2)
             # inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
             # inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
             messages = [url1, url2]
-
+            
             print(
                 "_________________________\n\n\n\n MESSAGES SET IN POST__________________\n\n"+str(messages)+"\n\n")
             # return render_template("index_final.html", messages=messages)
@@ -103,26 +109,32 @@ def homepage():
             # return render_template("hello_final.html", image_entities=messages)
 
             # return render_template('hello_final.html', image_entities=image_entity)
-
+    else:
+        inp1 =0
+        inp2=0
+        url1=""
+        url2=""
+        messages=[]
     # return render_template("upload_file.html")
     # content = {'thing':'some stuff',
     #          'other':'more stuff'}
     # content = [inp1,inp2]
     # inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
     # inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
-    if url1 is not "":
-        messages = [url1, url2]
-    else:
-        messages = []
+    # if url1 is not "":
+    #     messages = [url1, url2]
+    # else:
+    #     messages = []
     if (len(messages) > 0):
         print("_________________________\n\n\n\n MESSAGES SET BEFORE RENDER__________________\n\n"+str(messages)+"\n\n")
         # return redirect(url_for('testFunc', messages=messages))
 
         # return render_template("hello_final.html", image_entities=messages,messages=messages)
-        return render_template("index_final.html", image_entities=messages, messages=messages)
+
+        return render_template("index_final.html", image_entities=messages, jinjavar=messages)
     else:
         print("_________________________\n\n\n\n MESSAGES No SET BEFORE RENDER__________________\n\n"+str(messages)+"\n\n")
-        return render_template("index_final.html", image_entities=[], messages=[])
+        return render_template("index_final.html", image_entities=[], jinjavar=[])
 
 
 @app.route('/ques/<string:idd>', methods=['GET', 'POST'])
@@ -130,12 +142,11 @@ def ques(idd):
     print(idd)
 
 
-url1 = ""
-url2 = ""
 
 
 @app.route('/test', methods=['GET', 'POST'])
 def testFunc():
+    global url1, url2,inp1,inp2
     inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
     inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
     # messages = [inp1, inp2]

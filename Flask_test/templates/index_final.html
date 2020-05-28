@@ -26,7 +26,6 @@
     <div class="container py-5">
 
 
-        <!-- For demo purpose -->
         <header class="text-white text-center">
 
             <h1 class="display-4">AI Based Color Mapper for MUSE Images</h1>
@@ -69,20 +68,9 @@
                         class="btn btn-primary">Upload</button>
 
 
-                    {% if messages %}
-                        {{ messages|pprint}}
-
-
-                        <!-- var link1 = {{messages[0]}}
-                        var link2 = {{messages[1]}} -->
-                        <!-- <script>
-                            var scrt_var = 10; 
-
-
-                        </script> -->
-                        <!-- <a href="2.html" onclick="location.href=link1;return false;">Link</a> -->
-                        <!-- <a href={{messages[0]}}>before</a>
-                        <a href={{messages[1]}}>after</a> -->
+                    {% if jinjavar %}
+                        {{ jinjavar|pprint}}
+                       
                     {% else %}
                         <li><em>Images Unprocessed</em></li>
                     {% endif %}
@@ -123,7 +111,6 @@
                 <div class="image-area mt-4"><img id="imageResult" src="#" alt=""
                         class="img-fluid rounded shadow-sm mx-auto d-block"></div>
 
-                <!-- <div class="overlay" id="overlay_text">My Name is John</div> -->
 
 
             </div>
