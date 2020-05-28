@@ -29,7 +29,6 @@
         <!-- For demo purpose -->
         <header class="text-white text-center">
 
-
             <h1 class="display-4">AI Based Color Mapper for MUSE Images</h1>
             <p class="lead mb-0">App running our Cycle-GAN model in the background and provides predictions on the fly.
             </p>
@@ -195,11 +194,11 @@
         var fileName = input.files[0].name;
         infoArea.textContent = 'File name: ' + fileName;
     }
-
+    
 
     function previewFile(file) {
         alert_wrapper.innerHTML = "";
-
+        
         let reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onloadend = function () {

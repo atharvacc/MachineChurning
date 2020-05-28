@@ -38,18 +38,20 @@ app.config['STATIC_FOLDER'] = IMG_FOLDER
 print("STATIC_FOLDER: "+app.config['STATIC_FOLDER'])
 app.static_folder = app.config['STATIC_FOLDER']
 
+url1 = ""
+url2 = ""
+messages = []
+public_url_input = ""
+output_url = ""
+
 
 @app.route("/", methods=["GET", "POST"])
 def homepage():
-    global url1,url2
-    messages = []
-    inp1 = "" 
-    inp2 = ""
-    public_url_input=""
-    output_url=""
+    global url1, url2, output_url, public_url_input, messages
+
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     if request.method == "POST":
-
+        
         if 'file' not in request.files:
             flash('No file part')
             return ("no file")
@@ -78,20 +80,23 @@ def homepage():
             print("imgpath: "+imgpath)
             print("generate_data START")
 
-            public_url_input = push_to_bucket(
-                os.path.join(['STATIC_FOLDER'], stored_file_name), BUCKET_NAME)
-            generate_data(os.path.join(
-                app.config['STATIC_FOLDER'], stored_file_name))
-            predict("./imgs/")
-            output_url = generate_final_output(stored_file_name, 19, 256)
+            # public_url_input = push_to_bucket(
+            #     os.path.join(['STATIC_FOLDER'], stored_file_name), BUCKET_NAME)
+            # generate_data(os.path.join(
+            #     app.config['STATIC_FOLDER'], stored_file_name))
+            # predict("./imgs/")
+            # output_url = generate_final_output(stored_file_name, 19, 256)
             # image_entity = [public_url_input, output_url]
             # test()
-            url1="www.google.com"
-            url2="www.yahoo.com"
+            global public_url_input, output_url, messages
+            url1 = "www.google.com"
+            public_url_input = url1
+            url2 = "www.yahoo.com"
+            output_url = url2
             # inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
             # inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
             messages = [public_url_input, output_url]
-
+            flash("FINISHED: "+public_url_input+"\t"+output_url)
             print(
                 "_________________________\n\n\n\n MESSAGES SET IN POST__________________\n\n"+str(messages)+"\n\n")
             # return render_template("index_final.html", messages=messages)
@@ -110,46 +115,49 @@ def homepage():
     # content = [inp1,inp2]
     # inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
     # inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
-    if url1 is not "":
-        messages = [url1, url2]
-    else:
-        messages=[]
+    # if url1 is not "":
+    #     messages = [url1, url2]
+    # else:
+    #     messages=[]
     if (len(messages) > 0):
         print("_________________________\n\n\n\n MESSAGES SET BEFORE RENDER__________________\n\n"+str(messages)+"\n\n")
         # return redirect(url_for('testFunc', messages=messages))
-    
+
         # return render_template("hello_final.html", image_entities=messages,messages=messages)
-        return render_template("index_final.html", image_entities=messages,messages=messages)
+        return render_template("index_final.html", image_entities=messages, messages=messages)
     else:
         print("_________________________\n\n\n\n MESSAGES No SET BEFORE RENDER__________________\n\n"+str(messages)+"\n\n")
-        return render_template("index_final.html", image_entities=[],messages=[])
+        messages = []
+        # inp1 = ""
+        # inp2 = ""
+        public_url_input=""
+        output_url=""
+        return render_template("index_final.html", image_entities=[], messages=[])
 
 
 @app.route('/ques/<string:idd>', methods=['GET', 'POST'])
 def ques(idd):
     print(idd)
 
-url1=""
-url2=""
 
 @app.route('/test', methods=['GET', 'POST'])
 def testFunc():
     inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
     inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
     # messages = [inp1, inp2]
-    dv_arr=[]
+    dv_arr = []
     if request.method == "POST":
 
         if request.args['value']:
             dv1 = request.args['value']
         else:
-            dv1 = "" # counterpart for url_for()
+            dv1 = ""  # counterpart for url_for()
         if request.args['value']:
             dv2 = request.args['value']
         else:
-            dv2 = "" # counterpart for url_for()
+            dv2 = ""  # counterpart for url_for()
         # dv2 = request.args['value'] or "empty" # counterpart for url_for()
-        dv_arr=[dv1,dv2]
+        dv_arr = [dv1, dv2]
         print("_________________________\n\n\n\n DV_ARR RECEIVED __________________\n\n"+str(dv_arr)+"\n\n")
         # print(dv_arr)
     # image_entity = [messages[0], messages[1]]
