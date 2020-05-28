@@ -490,12 +490,12 @@
                 if (count == 2) {
                     link1 = this.response["BEFORE"]
                     link2 = this.response["AFTER"]
-                    if (!link1.startsWith("http://") && !link1.startsWith("https://")) {
-                        link1 = "http://"+ link1
-                    }
-                    if (!link2.startsWith("http://") && !link2.startsWith("https://")){
-                        link2 = "http://"+ link2
-                    }
+                    // if (!link1.startsWith("http://") && !link1.startsWith("https://")) {
+                    //     link1 = "http://"+ link1
+                    // }
+                    // if (!link2.startsWith("http://") && !link2.startsWith("https://")){
+                    //     link2 = "http://"+ link2
+                    // }
                     console.log("PASSING link1: " + link1)
                     console.log("PASSING link2: " + link2)
                     document.getElementById("Link1").innerText = link1

@@ -83,12 +83,12 @@ def homepage():
             print("imgpath: "+imgpath)
             print("generate_data START")
 
-            # public_url_input = push_to_bucket(
-            #     os.path.join("folder", stored_file_name), BUCKET_NAME)
+            public_url_input = push_to_bucket(
+                os.path.join("folder", stored_file_name), BUCKET_NAME)
             generate_data(os.path.join(
                 app.config['STATIC_FOLDER'], stored_file_name))
-            public_url_input = os.path.join(
-                app.config['STATIC_FOLDER'], stored_file_name)
+            # public_url_input = os.path.join(
+            #     app.config['STATIC_FOLDER'], stored_file_name)
             predict("./imgs/")
             output_url = generate_final_output(stored_file_name, 19, 256)
             image_entity = [public_url_input, output_url]
@@ -262,12 +262,12 @@ def generate_final_output(orig_filename, row_count, step_size):
     Image.fromarray(out).save(
         os.path.join(
             app.config['RESULTS_FOLDER'], filename))
-    pred_url = os.path.join(
-            app.config['RESULTS_FOLDER'], filename)
+    # pred_url = os.path.join(
+    #         app.config['RESULTS_FOLDER'], filename)
     # file.save(os.path.join(
     #     app.config['STATIC_FOLDER'], stored_file_name))
 
-    # pred_url = push_to_bucket(filename, BUCKET_NAME)
+    pred_url = push_to_bucket(filename, BUCKET_NAME)
     
     # Clear everything
     # os.system("rm -rf *.png results imgs ")
