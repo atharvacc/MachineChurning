@@ -1,4 +1,4 @@
-from flask import render_template, Flask, request, flash, redirect
+from flask import render_template, Flask, request, flash, redirect, jsonify
 from werkzeug.utils import secure_filename
 import os
 from google.cloud import storage
@@ -37,7 +37,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['STATIC_FOLDER'] = IMG_FOLDER
 print("STATIC_FOLDER: "+app.config['STATIC_FOLDER'])
 app.static_folder = app.config['STATIC_FOLDER']
-app.config['TEMPLATES_AUTO_RELOAD']=True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 url1 = ""
 url2 = ""
@@ -47,9 +47,10 @@ inp2 = 0
 public_url_input = ""
 output_url = ""
 
+
 @app.route("/", methods=["GET", "POST"])
 def homepage():
-    global url1, url2,inp1,inp2
+    global url1, url2, inp1, inp2
 
     # Return a Jinja2 HTML template and pass in image_entities as a parameter.
     if request.method == "POST":
@@ -90,18 +91,18 @@ def homepage():
             # output_url = generate_final_output(stored_file_name, 19, 256)
             # image_entity = [public_url_input, output_url]
             # test()
-            inp1+=1
-            inp2+=1 
+            inp1 += 1
+            inp2 += 1
             url1 = "www.google.com " + str(inp1)
-            url2 = "www.yahoo.com "+ str(inp2)
+            url2 = "www.yahoo.com " + str(inp2)
             # inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
             # inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
             messages = [url1, url2]
-            
             print(
                 "_________________________\n\n\n\n MESSAGES SET IN POST__________________\n\n"+str(messages)+"\n\n")
+            return jsonify({"redirect": "/test"})
+
             # return render_template("index_final.html", messages=messages)
-            # return jsonify({"redirect": "/test"})
 
             # print("")
             # return redirect(url_for('.testFunc', messages=messages))
@@ -110,11 +111,11 @@ def homepage():
 
             # return render_template('hello_final.html', image_entities=image_entity)
     else:
-        inp1 =0
-        inp2=0
-        url1=""
-        url2=""
-        messages=[]
+        inp1 = 0
+        inp2 = 0
+        url1 = ""
+        url2 = ""
+        messages = []
     # return render_template("upload_file.html")
     # content = {'thing':'some stuff',
     #          'other':'more stuff'}
@@ -142,15 +143,13 @@ def ques(idd):
     print(idd)
 
 
-
-
 @app.route('/test', methods=['GET', 'POST'])
 def testFunc():
-    global url1, url2,inp1,inp2
-    inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
-    inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
+    global url1, url2, inp1, inp2, messages
+    # inp1 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Cerebellum-ms-g.jpg"
+    # inp2 = "https://www.ihcworld.com/imagegallery/images/he-stain/normal_Colon-ms-g.jpg"
     # messages = [inp1, inp2]
-    dv_arr = []
+    # dv_arr = []
     if request.method == "POST":
 
         if request.args['value']:
@@ -166,7 +165,8 @@ def testFunc():
         print("_________________________\n\n\n\n DV_ARR RECEIVED __________________\n\n"+str(dv_arr)+"\n\n")
         # print(dv_arr)
     # image_entity = [messages[0], messages[1]]
-    return render_template('hello_final.html', image_entities=dv_arr)
+    print("testFunc() CALLED: "+str(inp1) +" "+str(inp2)+"\n")
+    return render_template('hello_final.html', jinjavar=messages)
 
 
 @app.route('/upload_photo', methods=['GET', 'POST'])

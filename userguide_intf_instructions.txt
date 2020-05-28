@@ -1,0 +1,16 @@
+if screens remains unloaded for >5 sec 
+try "flask run --port=8001" or any port within 8000-8100 range
+this most likely due browser refresh speed and ability to connect to port
+
+if after a refresh the formatting ever off looks at all, there is lag in webpage rendering,
+which should be seperate from functionality of app, ie uploads/model running should be fine. 
+Formatting can be resolved by waiting >=5 sec and refreshing
+
+If running app many consective times, browser will end up caching app locally to avoid 
+constant reload of files, however it will miss any updates to image upload/processing status,
+prss Cntl-Shift-R on Windows or Cmd-Shift-R to refresh browser cache.
+
+At any time if it feels the app is behaving irregularly, restart the app from cmd line 
+with "flask run" cmd.
+
+Was mainly tested in Chrome/Firefox, any other browser support is not guaranteed

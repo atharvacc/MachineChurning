@@ -1,3 +1,10 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
 <h1>AI Based Color Mapper for MUSE Images</h1>
 
 <p>This Python Flask application that runs our Cycle-GAN model in the background and provides predictions on the fly.
@@ -13,15 +20,15 @@
         <input type="submit" name="submit" value="Submit">
     </form> -->
     <input action="action" onclick="window.history.go(-1); return false;" type="submit" value="BACK" />
-   
-    
-    {% for image_entity in image_entities %}
-        <p>Displaying image </p>
-        {{image_entity}}
-        <base href="">
-        
-        <a href={{image_entity}}>file </a>
-        <img src={{image_entity}} width=512 height=512>
+
+
+    {% for image_entity in jinjavar %}
+    <p>Displaying image </p>
+    {{image_entity}}
+    <base href="">
+
+    <a href={{image_entity}}>file </a>
+    <img src={{image_entity}} width=512 height=512>
 
     {% endfor %}
 </body>
