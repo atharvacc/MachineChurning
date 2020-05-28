@@ -100,7 +100,8 @@ def homepage():
             messages = [url1, url2]
             print(
                 "_________________________\n\n\n\n MESSAGES SET IN POST__________________\n\n"+str(messages)+"\n\n")
-            return jsonify({"redirect": "/test"})
+            return jsonify(dict(BEFORE=url1,AFTER=url2))
+            # return jsonify({"redirect": "/test"})
 
             # return render_template("index_final.html", messages=messages)
 

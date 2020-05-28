@@ -66,14 +66,11 @@
 
                     <button onclick="upload('{{ request.url }}');" id="upload_btn"
                         class="btn btn-primary">Upload</button>
-                    
 
-                    {% if jinjavar %}
-                    {{ jinjavar|pprint}}
+                    <div id="urlsGen">
+                        <li id="myLi"><em>Images Unprocessed</em></li>
+                    </div>
 
-                    {% else %}
-                    <li><em>Images Unprocessed</em></li>
-                    {% endif %}
 
 
 
@@ -192,26 +189,31 @@
     //         }
     //     });
     // };
-    
-    
+
+
     /*  ==========================================
         SHOW UPLOADED IMAGE NAME
     * ========================================== */
     var inp = document.getElementById('upload');
     var infoArea = document.getElementById('upload-label');
 
-    
+
     function showFileName(event) {
         console.log("showFileName() CALLED")
         var input = event.srcElement;
-        console.log("showFileName() input: "+input)
+        console.log("showFileName() input: " + input)
         var fileName = input.files[0].name;
-        console.log("showFileName() fileName: "+fileName)
+        console.log("showFileName() fileName: " + fileName)
         infoArea.textContent = 'File name: ' + fileName;
-        console.log("showFileName() infoArea.textContent: "+infoArea.textContent)
+        console.log("showFileName() infoArea.textContent: " + infoArea.textContent)
     }
 
     inp.addEventListener('change', showFileName);
+
+    function getImgContentType(img) {
+        return fetch(img.src, { method: 'HEAD' })
+            .then(response => response.headers.get('Content-type'))
+    }
 
     function previewFile(file) {
         alert_wrapper.innerHTML = "";
@@ -220,14 +222,38 @@
         let reader = new FileReader()
         reader.readAsDataURL(file)
         console.log("previewFile() reader: " + reader)
-        
+
         reader.onloadend = function () {
             console.log("previewFile() FileReader.onloadend() START")
             let img = document.createElement('img')
-            console.log("previewFile() img: "+img)
-            
+            console.log("previewFile() img: " + img)
+
             img.src = reader.result
-            console.log("previewFile() img.src: "+typeof(img.src))
+            is_tif = false
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("HEAD", img.src, true);
+            xhr.onreadystatechange = function () {
+                if (this.readyState == this.DONE) {
+                    console.log(xhr.getResponseHeader("Content-Type"));   // type
+                    if (xhr.getResponseHeader("Content-Type") == "image/tiff") {
+                        is_tif = true
+                        console.log("previewFile() is_tif inside: " + is_tif)
+                        if (is_tif) {
+                            // alert("TIFF preview browser unsupported")
+                            show_alert("TIFF preview unsupported in browser", "warning")
+                        }
+                    }
+
+                    console.log(xhr.getResponseHeader("Content-Length")); // size
+                    // ...
+                    // alert(xhr.getResponseHeader("Content-Type"))
+                }
+            };
+            xhr.send();
+            console.log("previewFile() is_tif outside: " + is_tif)
+
+            console.log("previewFile() img.src: " + typeof (img.src))
 
             var realWidth = img.naturalWidth;
             var realHeight = img.naturalHeight;
@@ -279,7 +305,7 @@
 
     function handleFiles(files) {
         files = [...files]
-        console.log("handleFiles(): START\nhandleFiles files: "+ files)
+        console.log("handleFiles(): START\nhandleFiles files: " + files)
         // files.forEach(uploadFile)
         files.forEach(previewFile)
         console.log("handleFiles(): FINISH")
@@ -302,11 +328,11 @@
 
     // Function to upload file
     function upload(url) {
-        console.log("upload(): START\nupload url: "+ url)
+        console.log("upload(): START\nupload url: " + url)
         // input ONLY gets file name,displays it, and previews img
         // INPUT DOES NOT LOAD IMG, SUBMIT DOES
-        console.log("upload() input: "+input)
-        console.log("upload() input.value: "+input.value)
+        console.log("upload() input: " + input)
+        console.log("upload() input.value: " + input.value)
 
         // Reject if the file input is empty & throw alert
         if (!input.value) {
@@ -319,10 +345,10 @@
 
         // Create a new FormData instance with url given in input, will be POST to 
         var data = new FormData();
-        console.log("upload() data CREATED: "+ data)
+        console.log("upload() data CREATED: " + data)
         // Create a XMLHTTPRequest instance
         var request = new XMLHttpRequest();
-        console.log("upload() request CREATED: "+ request)
+        console.log("upload() request CREATED: " + request)
 
         // Set the response type
         request.responseType = "json";
@@ -348,11 +374,11 @@
         // Get a reference to the file
         var file = input.files[0];
         // handleFiles(file)
-        console.log("upload() file reference CREATED: "+ file)
+        console.log("upload() file reference CREATED: " + file)
 
         // Get a reference to the filename
         var filename = file.name;
-        console.log("upload() file name reference CREATED: "+ filename)
+        console.log("upload() file name reference CREATED: " + filename)
 
         // (async function () {
         //     await handleFiles(this.file);
@@ -360,42 +386,42 @@
 
         // Get a reference to the filesize & set a cookie
         var filesize = file.size;
-        console.log("upload() filesize CREATED: "+ filesize)
+        console.log("upload() filesize CREATED: " + filesize)
         document.cookie = `filesize=${filesize}`;
-        console.log("upload() cookie assigned filesize: "+ document.cookie)
+        console.log("upload() cookie assigned filesize: " + document.cookie)
 
         // Append the file to the FormData instance
         data.append("file", file);
-        console.log("upload() file APPEND to FormData: "+ file)
+        console.log("upload() file APPEND to FormData: " + file)
 
         // request progress handler
         request.upload.addEventListener("progress", function (e) {
-    // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/upload
-            console.log("EventListener progress() START")
+            // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/upload
+            console.log("upload() EventListener progress() START")
 
             // Get the loaded amount and total filesize (bytes)
             var loaded = e.loaded;
             var total = e.total
-            console.log("EventListener progress() loaded: "+ loaded)
-            console.log("EventListener progress() total: "+ total)
+            console.log("upload() EventListener progress() loaded: " + loaded)
+            console.log("upload() EventListener progress() total: " + total)
 
 
             // Calculate percent uploaded
             var percent_complete = (loaded / total) * 100;
-            console.log("EventListener progress() percent_complete: "+ percent_complete)
+            console.log("upload() EventListener progress() percent_complete: " + percent_complete)
 
             // Update the progress text and progress bar
             progress.setAttribute("style", `width: ${Math.floor(percent_complete)}%`);
             progress_status.innerText = `${Math.floor(percent_complete)}% of img uploaded to browser`;
-            console.log("EventListener progress() FINISH")
+            console.log("upload() EventListener progress() FINISH")
 
         })
-        
+
         // request load handler (transfer complete)
         // browser finished upload -> 
         request.addEventListener("load", function (e) {
-            console.log("EventListener load() START")
-            console.log("EventListener load() calling show_alert")
+            console.log("upload() EventListener load() START")
+            console.log("upload() EventListener load() calling show_alert")
 
             if (request.status == 200) {
 
@@ -407,47 +433,67 @@
                 show_alert(`Error uploading file`, "danger");
 
             }
-            console.log("CALLING RESET()") 
+            console.log("upload() EventListener load() CALLING RESET()")
             reset();
-            console.log("EventListener load() FINISH")
+            console.log("upload() EventListener load() FINISH")
 
         });
 
         // request error handler
         request.addEventListener("error", function (e) {
-            console.log("CALLING RESET()") 
+            console.log("upload() EventListener error() START")
+
+            console.log("upload() EventListener error() CALLING RESET()")
             reset();
 
             show_alert(`Error uploading file`, "warning");
+            console.log("upload() EventListener error() FINISH")
 
         });
 
         // request abort handler
         request.addEventListener("abort", function (e) {
-            console.log("CALLING RESET()") 
+            console.log("upload() EventListener abort() START")
+            console.log("upload() EventListener abort() CALLING RESET()")
             reset();
 
             show_alert(`Upload cancelled`, "primary");
+            console.log("upload() EventListener abort() FINISH")
 
         });
 
-        console.log(" request.open() START")
+        console.log("upload() request.open() START")
         // Open and send the request
-        console.log(" request.open(\"post\" "+url)
+        console.log("upload() request.open(\"post\" " + url)
         request.open("post", url);
-        console.log(" request.open() FINISHED")
+        console.log("upload() request.open() FINISHED")
 
-        console.log(" request.send() START")
-        console.log(" request.send() data: " + data)
+        console.log("upload() request.send() START")
+        console.log("upload() request.send() data: " + data)
         request.send(data);
-        console.log(" request.send() FINISHED")
+        console.log("upload() request.send() FINISHED")
+        
+        // onreadystatechange function is called every time the readyState changes.
+        request.onreadystatechange = function () {
+            // readyState 4: request finished and response is ready
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("upload() request state change and response is ready")
+                // console.log("upload() state change responseText: "+ responseText)
+                console.log(this.responseType)
+                console.log(this.response)
+                document.getElementById("myLi").innerHTML= JSON.stringify(this.response)
 
-        // console.log("EventListener load() FINISH")
+                // alert(this.responseText);
+            }
+        };
+        // GET JSON RESPONSE FROM Request
+        // PASS JSON TO AJAX POST TO NEW / ROUTE
+
 
         // IDK if this work
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        }
+        // if (data.redirect) {
+        //     window.location.href = data.redirect;
+        // }
         cancel_btn.addEventListener("click", function () {
 
             request.abort();
@@ -458,11 +504,11 @@
 
     // Function to update the input placeholder
     function input_filename() {
-        console.log("input_filename() START") 
+        console.log("input_filename() START")
         file_input_label.innerText = input.files[0].name;
-        console.log("input_filename() file_input_label set: " + input.files[0].name) 
+        console.log("input_filename() file_input_label set: " + input.files[0].name)
         // previewFile()
-        console.log("input_filename() FINISH") 
+        console.log("input_filename() FINISH")
     }
 
     // Function to reset the page
