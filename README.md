@@ -40,4 +40,4 @@ bash run_flask.sh #Run locally
 ```
 
 ## A few results
-![Original MUSE](results/muse.png){:height="58px" width="58px"}
+<img src='results/muse.png' width=384 height=384>
