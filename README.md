@@ -6,10 +6,10 @@
 
 - Copy your files to the MachineChurning Directory with the following tree structure
 
-'''bash
+```bash
 MUSE/
 ├── testA
 ├── testB
 ├── trainA
 └── trainB
-'''
+```
