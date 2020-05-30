@@ -40,4 +40,4 @@ bash run_flask.sh #Run locally
 ```
 
 ## A few results
-![Original MUSE](results/muse.png = 512x512)
+![Original MUSE](results/muse.png =512x512)
