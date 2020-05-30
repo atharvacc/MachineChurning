@@ -7,3 +7,5 @@ pillow
 Flask
 google-cloud-storage
 scikit-image==0.17.1
+seaborn
+tensorflow
