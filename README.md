@@ -13,3 +13,8 @@ MUSE/
 ├── trainA
 └── trainB
 ```
+
+```python
+python main_parser.py <args>
+```
+The documentation for main_parser can be found under docs/parser_documentation.md
