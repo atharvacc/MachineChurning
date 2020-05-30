@@ -14,7 +14,7 @@ pip install torch==1.5.0+cu101 torchvision==0.6.0+cu101 -f https://download.pyto
 ## Training the model and inference
 - pretrained models can be found here 
 https://drive.google.com/drive/folders/1FdxMdDVCZHN-V0x_tOvS4wemccTl6XEg?usp=sharing
-- Copy this folder to MachineChurning/App/saved_models
+- Copy the pretrained model folder to MachineChurning/App/. THE DIRECTORY STRUCTURE IS IMPORTANT FOR THE CODE TO BUILD.
 - Copy your files to the MachineChurning Directory with the following tree structure
 
 ```bash
