@@ -37,8 +37,7 @@ The documentation for main_parser can be found under docs/parser_documentation.m
 ```bash
 bash run_flask.sh #Run on port 8888
 bash run_flask.sh #Run locally
-```
-
+``` 
 <img src='results/int.png' width=384 height=384>
 
 <img src='results/int_res.png' width=384 height=384>
