@@ -28,6 +28,7 @@ MUSE/
 ```python
 python main_parser.py --train_or_test train <args> # For training
 python main_parser.py --train_or_test test <args> # For testing
+# Examples for training cycle-gan can be found in scripts/train_script.sh
 ```
 The documentation for main_parser can be found under docs/parser_documentation.md
 
