@@ -45,5 +45,6 @@ bash run_flask.sh #Run locally
 ## A few results
 ### Original MUSE
 <img src='results/muse.png' width=384 height=384>
+
 ### Predicted H&E
 <img src='results/muse_pred.png' width=384 height=384>
