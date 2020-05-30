@@ -5,8 +5,11 @@
 # Training the model
 
 - Copy your files to the MachineChurning Directory with the following tree structure
+
+'''bash
 MUSE/
 ├── testA
 ├── testB
 ├── trainA
 └── trainB
+'''
