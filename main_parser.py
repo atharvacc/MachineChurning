@@ -115,7 +115,6 @@ def main():
                          --checkpoints_dir {model_path} --loadSize 512 --fineSize 512 --display_winsize 512 --name {test_model_name} \
                               --model cycle_gan --netG resnet_fpn" .format(latest = parser.parse_args().epoch_use, data_path = parser.parse_args().test_dir,
                                model_path = parser.parse_args().model_path, test_model_name = parser.parse_args().test_model_name, result_dir = parser.parse_args().result_dir))
-
     elif (parser.parse_known_args()[0].model_name == "cycle-gan-compressed"):
         if (parser.parse_known_args()[0].train_or_test == "train"):
             add_train_cycle_gan_compressed_args(parser)
