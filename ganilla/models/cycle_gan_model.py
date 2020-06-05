@@ -4,6 +4,8 @@ from util.image_pool import ImagePool
 from .base_model import BaseModel
 from . import networks
 
+# import glob
+# from blurSegmentation.blur_detection import *
 
 class CycleGANModel(BaseModel):
     def name(self):
@@ -150,12 +152,21 @@ class CycleGANModel(BaseModel):
             t3 = torch.cat((d1,d2),0)
 
             out_muse = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+
+            # Blur segmentation
+            # out_muse = (1 - get_blur_map(self.real_A.reshape(512, 512, 3).reshape(-1, 3))) * 255
+
             del d1,d2,t3
          # combined loss
             d1 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.fake_B.reshape(512,512,3).reshape(-1,3), self.c1_HE),2),1)).reshape(1,512*512) 
             d2 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.fake_B.reshape(512,512,3).reshape(-1,3), self.c2_HE),2),1)).reshape(1,512*512)
             t3 = torch.cat((d1,d2),0)
+
             out_HE = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+
+            # Blur segmentation
+            # out_HE = (1 - get_blur_map(self.fake_B.reshape(512,512,3).reshape(-1,3))) * 255
+
             del d1,d2,t3
 
             d1 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.fake_A.reshape(512,512,3).reshape(-1,3), self.c1_MUSE),2),1)).reshape(1,512*512) 
@@ -163,11 +174,20 @@ class CycleGANModel(BaseModel):
             t3 = torch.cat((d1,d2),0)
 
             out_muse_1 = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+
+            # Blur segmentation
+            # out_HE = (1 - get_blur_map(self.fake_A.reshape(512,512,3).reshape(-1,3))) * 255
+
             del d1,d2,t3
             d1 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.real_B.reshape(512,512,3).reshape(-1,3), self.c1_HE),2),1)).reshape(1,512*512) 
             d2 = torch.sqrt(torch.sum(torch.pow(torch.sub(self.real_B.reshape(512,512,3).reshape(-1,3), self.c2_HE),2),1)).reshape(1,512*512)
             t3 = torch.cat((d1,d2),0)
+
             out_HE_1 = torch.argmax(t3,0).reshape(512,512).type(torch.cuda.FloatTensor)
+
+            # Blur segmentation
+            # out_HE_1 =  (1 - get_blur_map(self.real_B.reshape(512,512,3).reshape(-1,3))) * 255
+
             del d1,d2,t3
         
         
