@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0a9875eb-e09d-456e-939f-0ebdb2aed45a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../main_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/../main_parser.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>real_stat_A_path</find>
+      <find>--net</find>
+      <find>load</find>
+      <find>ls</find>
+      <find>lsgan</find>
+      <find>load_si</find>
+      <find>conf</find>
+      <find>gan</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/models/cycle_gan_model.py" />
+        <option value="$PROJECT_DIR$/options/train_options.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="834" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="compressed-gan" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0a9875eb-e09d-456e-939f-0ebdb2aed45a" name="Default Changelist" comment="" />
+      <created>1590388200398</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590388200398</updated>
+      <workItem from="1590388205227" duration="796000" />
+      <workItem from="1591236911649" duration="6872000" />
+      <workItem from="1591386657412" duration="165000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="7833000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25579977" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="R Graphics" order="4" />
+      <window_info anchor="right" id="R Packages" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/options/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/LICENSE" />
+    <entry file="file://$PROJECT_DIR$/trainer.py" />
+    <entry file="file://$PROJECT_DIR$/utils/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/utils/html.py" />
+    <entry file="file://$PROJECT_DIR$/utils/weight_transfer.py" />
+    <entry file="file://$PROJECT_DIR$/utils/util.py" />
+    <entry file="file://$PROJECT_DIR$/utils/logger.py" />
+    <entry file="file://$PROJECT_DIR$/utils/image_pool.py" />
+    <entry file="file://$PROJECT_DIR$/options/test_options.py" />
+    <entry file="file://$PROJECT_DIR$/models/networks.py" />
+    <entry file="file://$PROJECT_DIR$/models/test_model.py" />
+    <entry file="file://$PROJECT_DIR$/models/spade_model.py" />
+    <entry file="file://$PROJECT_DIR$/models/pix2pix_model.py" />
+    <entry file="file://$PROJECT_DIR$/train_supernet.py" />
+    <entry file="file://$PROJECT_DIR$/train.py" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/latency_full.sh" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/latency_compressed.sh" />
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/search_multi.py" />
+    <entry file="file://$PROJECT_DIR$/options/distill_options.py" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/train_mobile.sh" />
+    <entry file="file://$PROJECT_DIR$/select_arch.py" />
+    <entry file="file://$PROJECT_DIR$/options/search_options.py" />
+    <entry file="file://$PROJECT_DIR$/supernets/resnet_supernet.py" />
+    <entry file="file://$PROJECT_DIR$/options/supernet_options.py" />
+    <entry file="file://$PROJECT_DIR$/search.py" />
+    <entry file="file://$PROJECT_DIR$/get_test_opt.py" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/train_supernet.sh" />
+    <entry file="file://$PROJECT_DIR$/cycle_gan.ipynb" />
+    <entry file="file://$PROJECT_DIR$/models/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/models/base_model.py" />
+    <entry file="file://$PROJECT_DIR$/options/base_options.py" />
+    <entry file="file://$PROJECT_DIR$/get_real_stat.py" />
+    <entry file="file://$PROJECT_DIR$/distill.py" />
+    <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py" />
+    <entry file="file://$PROJECT_DIR$/options/train_options.py" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/distill.sh" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/search.sh" />
+    <entry file="file://$PROJECT_DIR$/scripts/gaugan/cityscapes/test_compressed.sh" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/test_compressed.sh" />
+    <entry file="file://$PROJECT_DIR$/scripts/cycle_gan/horse2zebra/export.sh" />
+    <entry file="file://$PROJECT_DIR$/export.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+  </component>
+</project>
