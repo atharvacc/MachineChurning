@@ -150,7 +150,7 @@ def main():
                     model_save_dir=parser.parse_args().model_save_dir
                 )
             #train the mobile (decomposed model)
-            os.system("python compressedGan/train.py --dataroot {train_dir} --display_winsize 512 --crop_size 512 --load_size 512 --model cycle_gan --lr {lr} --log_dir {model_save_dir}/mobile --real_stat_A_path {stat_A} --real_stat_B_path {stat_B}".format(
+            os.system("python compressedGan/train.py --dataroot {train_dir} --display_winsize 512 --crop_size 512 --load_size 512 --model cycle_gan --lr {lr} --nepochs {epochs} --nepochs_decay {epoch_decay} --log_dir {model_save_dir}/mobile --real_stat_A_path {stat_A} --real_stat_B_path {stat_B}".format(
                 train_dir=parser.parse_args().train_dir, lr=parser.parse_args().lr,
                 batch_size=parser.parse_args().batch_size, model_save_dir=parser.parse_args().model_save_dir,
                 epochs=parser.parse_args().epochs,
