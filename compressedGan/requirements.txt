@@ -18,5 +18,5 @@ tensorboardX==2.0
 torch==1.4.0
 torchvision==0.5.0
 tqdm==4.42.1
-Werkzeug==1.0.0
+Werkzeug==2.2.3
 wget==3.2
